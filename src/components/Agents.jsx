@@ -27,7 +27,6 @@ const Agents = () => {
     isOTPVerified: false,
     countryCode: "",
     countryName: "",
-
   });
 
   useEffect(() => {
@@ -49,13 +48,11 @@ const Agents = () => {
 
   const validateCurrentStep = () => {
     if (currentStep === 0) {
-
       if (
         !details.propertyType ||
         !details.bedroomCount ||
         !details.weeklyOrSaleValue
       ) {
-
         toast.error("Please complete all fields in 'About Property'!", {
           position: "top-center",
           autoClose: 3000,
@@ -63,8 +60,6 @@ const Agents = () => {
         return false;
       }
     } else if (currentStep === 1) {
-
-
       if (!details.location) {
         toast.error("Please provide a location!", {
           position: "top-center",
@@ -73,7 +68,6 @@ const Agents = () => {
         return false;
       }
     } else if (currentStep === 2) {
-
       if (
         !details.selectedPlan ||
         !details.selectedPurpose ||
@@ -88,7 +82,6 @@ const Agents = () => {
         return false;
       }
     } else if (currentStep === 3) {
-
       if (!details.emailAddress || !details.phoneNumber) {
         toast.error(
           "Please provide both your email address and phone number!",
@@ -97,7 +90,6 @@ const Agents = () => {
             autoClose: 3000,
           }
         );
-
         return false;
       }
       if (!details.isOTPVerified) {
