@@ -15,68 +15,74 @@ const Footer = ({
 
   return (
     <footer
-      className={`mr-[-21px]  bg-lavender-100 flex flex-col items-start justify-start pt-[70px] pb-[151px] pl-[85px] pr-[5px] box-border relative gap-[102px]  text-center text-xl text-black font-instrument-sans mq800:gap-[51px] mq800:pl-[42px] mq800:pt-[45px] mq800:pb-[98px] mq800:box-border mq450:gap-[25px] mq450:pl-5 mq450:box-border ${className} w-screen`}
+      className={`mr-[-21px] bg-lavender-100 flex flex-col items-start justify-start pt-[30px] pb-[30px] pl-[20px] pr-[20px] box-border relative gap-[40px] text-center text-sm text-black font-instrument-sans mq800:gap-[25px] mq800:pl-[20px] mq800:pt-[20px] mq800:pb-[30px] mq800:box-border mq450:gap-[15px] mq450:pl-5 mq450:box-border ${className} w-screen h-[20vh]`} // Reduced height to 20% of the viewport height
     >
       <img
         src="images/footerBg.png"
         alt="Background"
-        className="absolute inset-0 w-full h-full "
+        className="absolute inset-0 w-full h-96 lg:h-56"
       />
-      <div className="flex flex-row items-start justify-center flex-wrap content-start gap-[121px] max-w-full mq800:gap-[30px] mq450:gap-[15px] mq1350:gap-[60px]">
-        <div className="w-[304px] flex flex-col items-start justify-start">
+      <div className="flex flex-row items-start justify-center flex-wrap content-start gap-[60px] max-w-full mq800:gap-[20px] mq450:gap-[10px]">
+        <div className="w-[200px] flex flex-col items-start justify-start">
           <img
-            className="w-[252px] h-[38px] relative"
+            className="w-[180px] h-[30px] relative"
             alt=""
             src={fIndMyAgent}
           />
         </div>
-        <div className="flex-1 flex flex-row items-start justify-start gap-[119px] min-w-[230px] max-w-full mq450:gap-[59px] mq450:flex-wrap">
-          <div className="flex flex-col items-start justify-start gap-[22px]">
-            <div className="self-stretch relative tracking-[0.01em] font-medium mq450:text-base">
-              Categories
-            </div>
-            <div className="relative tracking-[0.01em] font-medium text-left mq450:text-base">
-              Reviews
-            </div>
-            <div className="relative tracking-[0.01em] font-medium text-left inline-block min-w-[76px] mq450:text-base">
-              Listings
-            </div>
-            <div className="self-stretch relative tracking-[0.01em] font-medium inline-block min-w-[107px] mq450:text-base">
-              Contact Us
-            </div>
+
+        {/* Categories, Reviews, Listings, Contact Us */}
+        <div className="flex flex-col items-start justify-start gap-[12px] min-w-[120px] text-left">
+          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+            Categories
           </div>
-          <div className="flex-1 flex flex-col items-start justify-start gap-[22px] min-w-[84px] text-left">
-            <div className="self-stretch relative tracking-[0.01em] font-medium mq450:text-base">
-              About Us
-            </div>
-            <div className="self-stretch relative tracking-[0.01em] font-medium mq450:text-base">
-              Awards
-            </div>
-            <div className="self-stretch relative tracking-[0.01em] font-medium mq450:text-base">
-              Useful Sites
-            </div>
-            <a
-              className="[text-decoration:none] relative tracking-[0.12px] font-medium text-[inherit] mq450:text-base"
-              style={privacyPolicyStyle}
-            >
-              Privacy Policy
-            </a>
+          <div className="relative tracking-[0.01em] font-medium text-xs text-left mq450:text-xs">
+            Reviews
+          </div>
+          <div className="relative tracking-[0.01em] font-medium text-xs text-left inline-block min-w-[60px] mq450:text-xs">
+            Listings
+          </div>
+          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs inline-block min-w-[80px] mq450:text-xs">
+            Contact Us
           </div>
         </div>
-        <div className="flex-1 flex flex-col items-start justify-start gap-[22px] min-w-[226px] max-w-full text-left">
-          <div className="relative tracking-[0.01em] font-medium mq450:text-base">
+
+        {/* About Us, Awards, Useful Sites, Privacy Policy */}
+        <div className="flex flex-col items-start justify-start gap-[12px] min-w-[120px] text-left">
+          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+            About Us
+          </div>
+          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+            Awards
+          </div>
+          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+            Useful Sites
+          </div>
+          <a
+            className="[text-decoration:none] relative tracking-[0.12px] font-medium text-[inherit] mq450:text-xs"
+            style={privacyPolicyStyle}
+          >
+            Privacy Policy
+          </a>
+        </div>
+
+        {/* Contact details */}
+        <div className="flex-1 flex flex-col items-start justify-start gap-[12px] min-w-[180px] max-w-full text-left">
+          <div className="relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
             27th Street of New Town, Digital Villa
           </div>
-          <div className="relative tracking-[0.01em] font-medium mq450:text-base">
+          <div className="relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
             010-020-0340
           </div>
-          <div className="relative tracking-[0.01em] font-medium mq450:text-base">
+          <div className="relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
             090-080-0760
           </div>
         </div>
       </div>
-      <div class="w-full flex justify-center items-center z-[1]">
-        <p class="tracking-[0.01em] text-center">
+
+      {/* Footer copyright */}
+      <div className="w-full flex justify-center items-center z-[1]">
+        <p className="tracking-[0.01em] text-xs text-center">
           Copyright © 2024 FindMyAgent., Ltd. All Rights Reserved. FindMyAgent
         </p>
       </div>

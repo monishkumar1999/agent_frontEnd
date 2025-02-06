@@ -17,6 +17,8 @@ import BuyerAgentDetailsPageRevi from "../pages/BuyerAgentDetailsPageRevi";
 import AppRoutes from "../admin/assets/routes/AppRoute";
 import Chat from "../components/Chat";
 
+
+
 export default function Router() {
 
   return (
@@ -38,6 +40,7 @@ export default function Router() {
         <Route path="/BuyerAgentDetailsPageInfo" element={<BuyerAgentDetailsPageInfo />} />
         <Route path="/BuyerAgentDetailsPageRevi" element={<BuyerAgentDetailsPageRevi />} />
         <Route path="/ListOfBuyerAgents" element={<ListOfBuyerAgents />} />
+
 
         <Route path="/chat/:user" element={<Chat />} />
 
