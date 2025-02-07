@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Check, ChevronDown, HelpCircle } from "lucide-react";
 import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
+
+
+
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -105,13 +109,10 @@ const MultiStepForm = () => {
     const fetchRoles = async () => {
       try {
         for (const data of getData) {
-          const response = await axios.get(
-            `http://localhost:8000/${data.apiName}/view`,
-            { withCredentials: true }
-          );
-          data.useMethodname(response.data.data || []); // Update state with fetched data
+          const response = await axiosInstance.get(`/${data.apiName}/view`);
+          
+          data.useMethodname(response.data.data || []);
         }
-  
         setLoading(false); // Set loading to false after all requests complete
       } catch (err) {
         setError("Failed to load roles");
