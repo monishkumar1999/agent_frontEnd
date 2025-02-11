@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "../pages/landingPage";
 import ExplaingPage from "../pages/ExplaingPage";
 import AgentForm from "../pages/AgentForm";
@@ -16,11 +16,9 @@ import BuyerAgentDetailsPageInfo from "../pages/BuyerAgentDetailsPageInfo";
 import BuyerAgentDetailsPageRevi from "../pages/BuyerAgentDetailsPageRevi";
 import AppRoutes from "../admin/assets/routes/AppRoute";
 import Chat from "../components/Chat";
-
-
+import LoginPage from "../pages/LoginPage";
 
 export default function Router() {
-
   return (
     // {d}
     <BrowserRouter>
@@ -37,13 +35,19 @@ export default function Router() {
         <Route path="/MultiStepForm" element={<MultiStepForm />} />
         <Route path="/register" element={<AgentForm />} />
         <Route path="/HowItWorks" element={<ExplaingPage />} />
-        <Route path="/BuyerAgentDetailsPageInfo" element={<BuyerAgentDetailsPageInfo />} />
-        <Route path="/BuyerAgentDetailsPageRevi" element={<BuyerAgentDetailsPageRevi />} />
+        <Route
+          path="/BuyerAgentDetailsPageInfo"
+          element={<BuyerAgentDetailsPageInfo />}
+        />
+        <Route
+          path="/BuyerAgentDetailsPageRevi"
+          element={<BuyerAgentDetailsPageRevi />}
+        />
         <Route path="/ListOfBuyerAgents" element={<ListOfBuyerAgents />} />
-
 
         <Route path="/chat/:user" element={<Chat />} />
 
+        <Route path="/user/login" element={<LoginPage />} />
 
         {/* Admin Routes */}
         <Route path="/admin/*" element={<AppRoutes />} />
