@@ -1,22 +1,18 @@
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode"; // ✅ Correct import
 
 const HeaderComponent = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -34,12 +30,29 @@ const HeaderComponent = () => {
           />
         </a>
       </div>
+
       <a
         href="/HowItWorks"
         className="bg-[#8046F1] text-white hover:bg-purple-700 rounded-full px-4 py-2 font-instrument-sans transition-colors duration-200"
       >
         Become An Agent
       </a>
+
+      <GoogleLogin
+        onSuccess={(credentialResponse) => {
+          const decoded = jwtDecode(credentialResponse.credential); // ✅ Use named import
+          // Extract email
+          const email = decoded.email;
+          console.log("📧 User Email:", email);
+
+          // write the check login api calles
+        }}
+        onError={() => {
+          console.log("❌ Login Failed");
+        }}
+        useOneTap
+        ux_mode="popup"
+      />
     </header>
   );
 };
