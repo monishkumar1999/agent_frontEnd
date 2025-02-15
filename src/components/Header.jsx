@@ -2,6 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // ✅ Correct import
+import axiosInstance from "../utils/axiosInstance";
 
 const HeaderComponent = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,13 +40,13 @@ const HeaderComponent = () => {
       </a>
 
       <GoogleLogin
-        onSuccess={(credentialResponse) => {
+        onSuccess={ async  (credentialResponse) => {
           const decoded = jwtDecode(credentialResponse.credential); // ✅ Use named import
-          // Extract email
           const email = decoded.email;
           console.log("📧 User Email:", email);
 
-          // write the check login api calles
+         await axiosInstance.post('agent/google-login',{email})
+         
         }}
         onError={() => {
           console.log("❌ Login Failed");
