@@ -53,10 +53,10 @@ const Sidebar = () => {
     },
     {
       key: 'products',
-      label: 'Products',
+      label: 'Reports',
       icon: <FaBox />,
       submenu: [
-        { key: 'all-products', label: 'All Products', path: '/products/all', icon: <FaBox /> },
+        { key: 'all-products', label: 'Agent List', path: '/admin/show/agents', icon: <FaBox /> },
         { key: 'add-product', label: 'Add Product', path: '/products/add', icon: <FaProductHunt /> },
       ],
     },

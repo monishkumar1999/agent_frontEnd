@@ -3,20 +3,20 @@ import server from "../admin/assets/constant";
 
 const axiosInstance = axios.create({
     baseURL: server,
-    withCredentials: true, // Ensures cookies (JWT) are sent
+    withCredentials: true, 
     headers: { "Content-Type": "application/json" }
 });
 
-// Interceptor to handle JWT expiry
+
 axiosInstance.interceptors.response.use(
     response => {
         return response;
     },
     error => {
         if (error.response && error.response.status === 401) {
-            localStorage.removeItem("token"); // Remove stored JWT
+            localStorage.removeItem("token"); 
             alert("Session expired. Redirecting to login.");
-            window.location.href = "/login"; // Redirect to login page
+            window.location.href = "/login"; 
         }
 
         return Promise.reject(error);

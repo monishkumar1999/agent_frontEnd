@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux';
 import Layout from '../component/Layout';
 import Shimmer from '../component/Shimmer';
 import Cookies from 'js-cookie';
+import AgentView from '../pages/agents/AgentView';
 // Lazy load the components
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 const Login = lazy(() => import('../login/Login'));
 const Master = lazy(() => import('../pages/Master/Master'));
 
 const AppRoutes = () => {
-const token =Cookies.get('auth_token');
+  const token = Cookies.get('auth_token');
 
 
   return (
@@ -190,8 +191,22 @@ const token =Cookies.get('auth_token');
           )}
         />
 
-        {/* Catch-all Route for Unknown Paths */}
+       
+
         <Route
+          path="show/agents"
+          element={token ? (
+            <Layout>
+              <AgentView />
+            </Layout>
+          ) : (
+            <Navigate to="/admin/login" replace />
+          )}
+        />
+
+
+         {/* Catch-all Route for Unknown Paths */}
+         <Route
           path="*"
           element={token ? (
             <Layout>
@@ -201,6 +216,7 @@ const token =Cookies.get('auth_token');
             <Navigate to="/admin/login" replace />
           )}
         />
+
       </Routes>
     </Suspense>
   );

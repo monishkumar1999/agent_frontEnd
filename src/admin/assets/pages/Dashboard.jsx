@@ -21,7 +21,7 @@ const Dashboard = () => {
             : "peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base"
         } peer-focus:top-[-10px] peer-focus:text-black peer-focus:text-sm bg-white px-1 rounded-md`}
       >
-        Extra Large
+        Extr
       </label>
     </div>
 
