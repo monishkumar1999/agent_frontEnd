@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../utils/axioInstance";
+import axiosInstance from "../../utils/axiosInstance";
 import toast from "react-hot-toast";
 import loadingBtn from "../user/lottiefile/loadingBtn.json";
 import Lottie from "lottie-react";

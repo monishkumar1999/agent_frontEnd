@@ -1,4 +1,3 @@
-// App.js
 import React from "react";
 import { Toaster } from "react-hot-toast"; // Import Toaster
 import Router from "./Router"; // Import Router component

@@ -7,6 +7,7 @@ import Agents from "../components/Agents";
 import Footer from "../components/Footer";
 import HeaderComponent from "../components/Header";
 import HeroBanner from "../components/HeroBanner";
+import SwipperCard from "../swippertest/SwipperCard";
 
 const LandingPage = () => {
   const agentsRef = useRef(null);
@@ -45,7 +46,8 @@ const LandingPage = () => {
 
       {/* Top Rated Agents Section */}
       <div className="py-12 sm:py-16 lg:py-20">
-        <TopRatedAgents />
+        <SwipperCard/>
+        {/* <TopRatedAgents /> */}
       </div>
 
       {/* Vetting Section */}

@@ -2,7 +2,6 @@ import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // ✅ Correct import
-import axiosInstance from "../utils/axiosInstance";
 import { Link } from "react-router-dom";
 
 const HeaderComponent = () => {
