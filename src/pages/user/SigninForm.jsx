@@ -1,8 +1,8 @@
 import { useState } from "react";
-import MailForm from "./MailForm";
+import Glogin from "./Glogin";
 import axiosInstance from "../../utils/axiosInstance";
 import toast from "react-hot-toast";
-import loadingBtn from "../user/lottiefile/loadingBtn.json";
+import loadingBtn from "./lottiefile/loadingBtn.json";
 import Lottie from "lottie-react";
 
 const SignInForm = ({ onSubmit }) => {
@@ -16,7 +16,7 @@ const SignInForm = ({ onSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
 
     let errors = {};
 
@@ -24,25 +24,31 @@ const SignInForm = ({ onSubmit }) => {
       errors.email = "Enter a valid email.";
     }
 
+    if (!password) {
+      errors.password = "Password is required.";
+    }
+
     setErrorMessages(errors);
 
     if (Object.keys(errors).length === 0) {
+      console.log("Submitting login request with:", { email, password });
+
       try {
         const response = await axiosInstance.post("/user/login", {
-          email: email,
-          password: password,
+          email,
+          password,
         });
 
-        console.log(response);
+        console.log("Login Response:", response);
         toast.success(response.data.message);
-        onSubmit(); // Trigger OTP form or next step
+        onSubmit(email); // ✅ Pass email for OTP verification
       } catch (e) {
-        console.log(e.response);
+        console.error("Login Error:", e.response);
         toast.error(e.response?.data?.message || "Something went wrong!");
       }
     }
 
-    setLoading(false); // Stop loading
+    setLoading(false);
   };
 
   return (
@@ -99,11 +105,11 @@ const SignInForm = ({ onSubmit }) => {
           </a>
         </div>
 
-        {/* Submit Button with Lottie Animation */}
+        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition flex justify-center items-center"
-          disabled={loading}
+          disabled={loading || !email || !password}
         >
           {loading ? (
             <Lottie animationData={loadingBtn} className="w-10 h-10" />
@@ -113,7 +119,7 @@ const SignInForm = ({ onSubmit }) => {
         </button>
 
         <p className="text-center my-4 text-gray-500">or</p>
-        <MailForm />
+        <Glogin />
       </form>
     </div>
   );
