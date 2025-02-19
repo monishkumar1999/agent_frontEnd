@@ -6,16 +6,16 @@ import { Calendar } from "lucide-react";
 const AgentViewForm = ({ setFilters }) => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [status, setStatus] = useState("");
+
 
   const handleSubmit = () => {
-    if (!fromDate || !toDate || !status) {
+    if (!fromDate || !toDate ) {
       alert("Please fill in all fields.");
       return;
     }
 
     // Set filters state from the form values
-    setFilters({ fromDate, toDate, status });
+    setFilters({ fromDate, toDate });
 
   };
 
@@ -61,21 +61,7 @@ const AgentViewForm = ({ setFilters }) => {
           </Popover>
         </div>
 
-        {/* APPROVAL STATUS DROPDOWN */}
-        <div className="w-full space-y-2">
-          <label className="block font-medium text-gray-700">Approval Status</label>
-          <select
-            className="w-full px-4 py-2 border rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="" disabled>Select Status</option>
-            <option value="0">Pending</option>
-            <option value="1">Approved</option>
-            <option value="2">Rejected</option>
-          </select>
-        </div>
-
+        
         {/* SUBMIT BUTTON */}
         <div className="w-full flex justify-center md:justify-start">
           <button
