@@ -18,8 +18,8 @@ import AppRoutes from "../admin/assets/routes/AppRoute";
 // import UserAppRoutes from "../users/assets/routes/UserAppRoutes";
 import Chat from "../components/Chat";
 import LoginPage from "../pages/LoginPage";
-import AgentRoutes from "../Agents/assets/routes/AgentRoutes";
 import UserAppRoutes from "../users/assets/routes/UserAppRoute";
+import AgentRoutes from "../Agents/assets/routes/AgentRoutes";
 
 export default function Router() {
   return (
@@ -54,9 +54,9 @@ export default function Router() {
 
         {/* Admin Routes */}
         <Route path="/admin/*" element={<AppRoutes />} />
-        <Route path="/agents/*" element={<AgentRoutes />} />
 
         <Route path="/user/*" element={<UserAppRoutes />} />
+        <Route path="/agents/*" element={<AgentRoutes />} />
       </Routes>
     </BrowserRouter>
   );

@@ -194,7 +194,9 @@ const handleProfileClick = () => {
                 <MessageSquare className="w-6 h-6 text-gray-700" />
                 <div>
                   <p className="text-sm font-bold text-gray-800 hover:text-violet-700 transition">
+                    <Link to="/agents/chatbox">
                     My Inbox
+                    </Link>
                   </p>
                   <p className="text-xs text-gray-600">Messages and Mails</p>
                 </div>

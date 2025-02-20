@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import Layout from "../../../admin/assets/component/Layout";
 import Shimmer from "../../../admin/assets/component/Shimmer";
 import AgentChat from "../component/AgentChat";
+import Chatbox from "../component/Chatbox";
 
 // Lazy load agent-related components
 const AgentHome = lazy(() => import("../component/AgentHome"));
@@ -28,6 +29,7 @@ const AgentRoutes = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
         <Route path="/chat" element={<AgentChat />} />
+        <Route path="/chatbox" element={<Chatbox />} />
         <Route path="/dashboard" element={<AgentDashboard />} />
         
       </Routes>
