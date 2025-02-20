@@ -5,8 +5,7 @@ export const getUserIdFromCookies = () => {
   const authTokenCookie = cookies.find((row) => row.startsWith("auth_token="));
 
 
- 
- 
+
   if (!authTokenCookie) return null; // No auth token found
 
   const token = authTokenCookie.split("=")[1];
@@ -14,6 +13,7 @@ export const getUserIdFromCookies = () => {
   try {
     const decoded = jwtDecode(token);
 
+    // console.log(decoded)
     return decoded.userId || null; // Extract userId from JWT payload
   } catch (error) {
     console.error("Error decoding JWT:", error);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaSearch, FaPaperPlane, FaPaperclip, FaImage } from "react-icons/fa";
 import AgentNavbar from "./AgentNavbar";
 
-const AgentChat = () => {
+const Agentchat = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -99,4 +99,4 @@ const AgentChat = () => {
   );
 };
 
-export default AgentChat;
+export default Agentchat;
