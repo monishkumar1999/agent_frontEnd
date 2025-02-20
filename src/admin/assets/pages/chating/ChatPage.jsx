@@ -10,6 +10,8 @@ import axiosInstance from "../../../../utils/axiosInstance";
 const ChatPage = () => {
   const { targetId } = useParams();
   const userId = getUserIdFromCookies();
+
+
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [receiverName, setReceiverName] = useState("");
@@ -39,6 +41,8 @@ const ChatPage = () => {
     const fetchChat = async () => {
       try {
         const response = await axiosInstance.get(`/chat/get-message/${userId}/${targetId}`);
+
+
         setMessages(response.data.messages || []);
       } catch (error) {
         console.error("Error fetching chat messages:", error);

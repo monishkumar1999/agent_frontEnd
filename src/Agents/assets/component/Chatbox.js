@@ -21,8 +21,9 @@ const Chatbox = () => {
   };
 
   return (
+    <header><AgentNavbar/>
     <div className="flex h-screen bg-gray-100">
-        <AgentNavbar/>
+        
       {/* Sidebar */}
       <div className="w-1/4 bg-white p-5 shadow-md flex flex-col items-center">
         <img
@@ -34,9 +35,11 @@ const Chatbox = () => {
         <p className="text-sm text-gray-600">@{user.username}</p>
         <p className="text-xs text-gray-500">{user.email}</p>
       </div>
+      
 
       {/* Chat Section */}
       <div className="flex-1 flex flex-col justify-between p-5">
+        
         {/* Chat Display */}
         <div className="flex-1 overflow-y-auto bg-white p-4 shadow-md rounded-lg">
           {messages.length === 0 ? (
@@ -72,6 +75,7 @@ const Chatbox = () => {
         </div>
       </div>
     </div>
+    </header>
   );
 };
 

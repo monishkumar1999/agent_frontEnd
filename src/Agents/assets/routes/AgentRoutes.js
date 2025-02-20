@@ -3,8 +3,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Layout from "../../../admin/assets/component/Layout";
 import Shimmer from "../../../admin/assets/component/Shimmer";
-import AgentChat from "../component/AgentChat";
+import AgentChat from "../component/Agentchat";
 import Chatbox from "../component/Chatbox";
+import AgentChatbox from "../component/chating/AgentChatbox";
+import Agentchat from "../component/Agentchat";
 
 // Lazy load agent-related components
 const AgentHome = lazy(() => import("../component/AgentHome"));
@@ -28,8 +30,8 @@ const AgentRoutes = () => {
         <Route path="/profile" element={<AgentProfile />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/chat" element={<AgentChat />} />
-        <Route path="/chatbox" element={<Chatbox />} />
+        <Route path="/chat" element={<AgentChatbox />} />
+        <Route path="/chatbox" element={<Agentchat />} />
         <Route path="/dashboard" element={<AgentDashboard />} />
         
       </Routes>
