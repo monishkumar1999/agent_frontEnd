@@ -37,31 +37,42 @@ const UserView = () => {
     fetchData(currentPage); // Fetch data on page or search query change
   }, [currentPage, searchQuery]); // Re-run when either `currentPage` or `searchQuery` changes
 
+  
+ 
+
   return (
-    <div className="min-h-screen py-6">
-      <h2 className="text-xl font-bold mb-4">User List</h2>
 
-      {/* Search input */}
-      <input
-          type="text"
-          className="w-1/3 px-4 text-lg border-2 border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-500 transition-all"
-          placeholder="Search users..."
-          onChange={handleSearchChange}
-          value={searchQuery}
-        />
+    <>
+    
+    {loading ? <div>Loading...</div> :   <div className="min-h-screen py-6">
 
-      {/* User List Component with loading */}
-      <UserList data={users} loading={loading} />
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
-      )}
-    </div>
+<h2 className="text-xl font-bold mb-4">User List</h2>
+
+{/* Search input */}
+<input
+    type="text"
+    className="w-1/3 px-4 py-2 text-lg border-2 border-gray-300 rounded-2xl shadow-md focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-500 transition-all mb-2"
+    placeholder="Search users..."
+    onChange={handleSearchChange}
+    value={searchQuery}
+  />
+
+{/* User List Component with loading */}
+<UserList data={users} loading={loading} />
+
+{/* Pagination */}
+{totalPages > 1 && (
+  <Pagination
+    currentPage={currentPage}
+    totalPages={totalPages}
+    onPageChange={setCurrentPage}
+  />
+)}
+</div>}
+    
+    </>
+  
   );
 };
 
