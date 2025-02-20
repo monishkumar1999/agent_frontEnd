@@ -25,7 +25,9 @@ const AdminChat = () => {
     // Fetch previous messages
     const fetchChat = async () => {
       try {
-        const response = await axiosInstance.get(`/chat/get-message/${userId}/${targetId}`);
+        const response = await axiosInstance.get(
+          `/chat/get-message/${userId}/${targetId}`
+        );
         setMessages(response.data.messages || []);
       } catch (error) {
         console.error("Error fetching chat messages:", error);
@@ -51,7 +53,12 @@ const AdminChat = () => {
   const handleSend = () => {
     if (!input.trim() || !socketRef.current) return;
 
-    const newMessage = { userId, targetId, message: input.trim(), timestamp: new Date().toISOString() };
+    const newMessage = {
+      userId,
+      targetId,
+      message: input.trim(),
+      timestamp: new Date().toISOString(),
+    };
 
     // Emit the new message to the server
     socketRef.current.emit("sendMessage", newMessage);
@@ -85,7 +92,9 @@ const AdminChat = () => {
 
       {/* Chat Window on the Right Side */}
       <div className="flex-1 bg-gray-50 p-6 flex flex-col">
-        <h2 className="text-3xl font-semibold text-gray-700 mb-6">Admin Chat</h2>
+        <h2 className="text-3xl font-semibold text-gray-700 mb-6">
+          Admin Chat
+        </h2>
 
         {/* Chat Messages */}
         <div
