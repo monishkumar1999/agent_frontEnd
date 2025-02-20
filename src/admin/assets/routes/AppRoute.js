@@ -5,6 +5,9 @@ import Layout from '../component/Layout';
 import Shimmer from '../component/Shimmer';
 import Cookies from 'js-cookie';
 import AgentView from '../pages/agents/AgentView';
+import AgentDetails from '../pages/agents/AgentDetails';
+import UserView from '../pages/user/UserView';
+import ChatPage from '../pages/chating/ChatPage';
 
 // Lazy load the components
 const Dashboard = lazy(() => import("../pages/Dashboard"));
@@ -233,7 +236,7 @@ const AppRoutes = () => {
           }
         />
 
-       
+
 
         <Route
           path="show/agents"
@@ -247,8 +250,63 @@ const AppRoutes = () => {
         />
 
 
-         {/* Catch-all Route for Unknown Paths */}
-         <Route
+        <Route
+          path="/agent-details/:id"
+          element={
+            token ? (
+              <Layout>
+                <AgentDetails />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+
+        <Route
+          path="/agent-details/:id"
+          element={
+            token ? (
+              <Layout>
+                <AgentDetails />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+
+        <Route
+          path="/chat/:targetId"
+          element={
+            token ? (
+              <Layout>
+                <ChatPage />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+
+<Route
+          path="/user/view"
+          element={
+            token ? (
+              <Layout>
+                <UserView />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+        {/* Catch-all Route for Unknown Paths */}
+        <Route
           path="*"
           element={
             token ? (
@@ -260,6 +318,11 @@ const AppRoutes = () => {
             )
           }
         />
+
+
+
+
+
 
       </Routes>
     </Suspense>

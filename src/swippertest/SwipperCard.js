@@ -44,7 +44,7 @@ const SwipperCard = ({ className = "" }) => {
             {img.map((agent, index) => (
               <SwiperSlide
                 key={index}
-                className="swiper-slide flex items-center justify-center"
+                className="swiper-slide flex items-center justify-center rounded-full"
                 onClick={() => handleAgentClick(index)} // ✅ Clicking image updates only details
               >
                 <img

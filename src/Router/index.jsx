@@ -15,9 +15,11 @@ import ListOfBuyerAgents from "../pages/ListOfBuyerAgents";
 import BuyerAgentDetailsPageInfo from "../pages/BuyerAgentDetailsPageInfo";
 import BuyerAgentDetailsPageRevi from "../pages/BuyerAgentDetailsPageRevi";
 import AppRoutes from "../admin/assets/routes/AppRoute";
+// import UserAppRoutes from "../users/assets/routes/UserAppRoutes";
 import Chat from "../components/Chat";
 import LoginPage from "../pages/LoginPage";
 import AgentRoutes from "../Agents/assets/routes/AgentRoutes";
+import UserAppRoutes from "../users/assets/routes/UserAppRoute";
 
 export default function Router() {
   return (
@@ -53,6 +55,8 @@ export default function Router() {
         {/* Admin Routes */}
         <Route path="/admin/*" element={<AppRoutes />} />
         <Route path="/agents/*" element={<AgentRoutes />} />
+
+        <Route path="/user/*" element={<UserAppRoutes />} />
       </Routes>
     </BrowserRouter>
   );

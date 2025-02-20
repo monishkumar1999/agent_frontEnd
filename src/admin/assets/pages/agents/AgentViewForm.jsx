@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { format } from "date-fns";
 import { Calendar } from "lucide-react";
 
-const AgentViewForm = () => {
+const AgentViewForm = ({ setFilters }) => {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [status, setStatus] = useState("");
-  const [data, setData] = useState([]);
 
   const handleSubmit = () => {
     if (!fromDate || !toDate || !status) {
@@ -15,17 +14,13 @@ const AgentViewForm = () => {
       return;
     }
 
-    const newData = { fromDate: format(new Date(fromDate), "PPP"), toDate: format(new Date(toDate), "PPP"), status };
-    setData([...data, newData]);
+    // Set filters state from the form values
+    setFilters({ fromDate, toDate, status });
 
-    // Clear form
-    setFromDate("");
-    setToDate("");
-    setStatus("");
   };
 
   return (
-    <div className="p-6 rounded-lg w-full max-w-5xl ">
+    <div className="p-6 rounded-lg w-full max-w-5xl">
       {/* FORM CONTAINER - STACK ON MOBILE, FLEX ON LARGE SCREENS */}
       <div className="flex flex-col md:flex-row gap-4 md:gap-6">
         {/* FROM DATE */}
@@ -75,21 +70,20 @@ const AgentViewForm = () => {
             onChange={(e) => setStatus(e.target.value)}
           >
             <option value="" disabled>Select Status</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
+            <option value="0">Pending</option>
+            <option value="1">Approved</option>
+            <option value="2">Rejected</option>
           </select>
         </div>
 
         {/* SUBMIT BUTTON */}
         <div className="w-full flex justify-center md:justify-start">
           <button
-            className="w-full md:w-auto bg-blue-500 text-white font-medium py-2 px-6 rounded-lg hover:bg-blue-600 transition"   
+            className="w-full md:w-auto bg-blue-500 text-white font-medium px-6 rounded-lg hover:bg-blue-600 transition"   
             onClick={handleSubmit}
           >
             Submit
           </button>
-          
         </div>
       </div>
     </div>

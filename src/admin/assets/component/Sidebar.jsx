@@ -57,9 +57,10 @@ const Sidebar = () => {
       icon: <FaBox />,
       submenu: [
         { key: 'all-products', label: 'Agent List', path: '/admin/show/agents', icon: <FaBox /> },
-        { key: 'add-product', label: 'Add Product', path: '/products/add', icon: <FaProductHunt /> },
+        { key: 'add-product', label: 'Users List', path: '/admin/user/view', icon: <FaProductHunt /> },
       ],
     },
+    { key: 'chat', label: 'Chat', path: '/admin/chat', icon: <FaTachometerAlt /> },
   ];
 
   return (

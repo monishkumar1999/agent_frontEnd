@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   const isSidebarOpen = useSelector(selectSidebarState);  // Get sidebar state from Redux
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen w-screen">
       {/* Header */}
       <Header />
 
