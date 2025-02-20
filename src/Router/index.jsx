@@ -17,6 +17,7 @@ import BuyerAgentDetailsPageRevi from "../pages/BuyerAgentDetailsPageRevi";
 import AppRoutes from "../admin/assets/routes/AppRoute";
 import Chat from "../components/Chat";
 import LoginPage from "../pages/LoginPage";
+import AgentRoutes from "../Agents/assets/routes/AgentRoutes";
 
 export default function Router() {
   return (
@@ -51,6 +52,7 @@ export default function Router() {
 
         {/* Admin Routes */}
         <Route path="/admin/*" element={<AppRoutes />} />
+        <Route path="/agents/*" element={<AgentRoutes />} />
       </Routes>
     </BrowserRouter>
   );

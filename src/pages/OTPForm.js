@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
-import InputField from "../pages/InputField"; // Adjust the import path as necessary
+import React, { useState } from "react";
+import axios from "axios";
+import InputField from "../pages/InputField"; // Adjust the path if necessary
+import toast from "react-hot-toast"
+import axiosInstance from "../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
+
+
 
 function OTPForm({ onVerify, email }) {
   const [otpInput, setOtpInput] = useState("");
   const [otpError, setOtpError] = useState("");
-  const [otpSuccess, setOtpSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [canResend, setCanResend] = useState(false);
-  const [timer, setTimer] = useState(30); // Timer for resend OTP
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!canResend) {
-      const countdown = setInterval(() => {
-        setTimer((prev) => {
-          if (prev <= 1) {
-            clearInterval(countdown);
-            setCanResend(true);
-            return 30; // Reset timer
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      return () => clearInterval(countdown);
-    }
-  }, [canResend]);
+
 
   const handleOtpChange = (e) => {
     setOtpInput(e.target.value);
@@ -33,28 +23,42 @@ function OTPForm({ onVerify, email }) {
     e.preventDefault();
     setIsLoading(true);
     setOtpError("");
-    setOtpSuccess("");
 
-    if (otpInput) {
-      const isVerified = await onVerify(otpInput); // Assume onVerify returns a promise
-      if (isVerified) {
-        setOtpSuccess("OTP verified successfully!");
-      } else {
-        setOtpError("Invalid OTP. Please try again.");
-      }
-    } else {
+    if (!otpInput) {
       setOtpError("Please enter the OTP.");
+      setIsLoading(false);
+      return;
     }
-    setIsLoading(false);
-  };
 
-  const resendOtp = () => {
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log("New OTP generated:", generatedOtp);
-    // Here you would typically send the new OTP to the user's email
-    alert(`A new OTP has been sent to ${email}.`);
-    setCanResend(false); // Disable resend button
-    setTimer(30); // Reset timer
+    try {
+      const otpData = { email, otp: otpInput };
+      
+      // Ensure correct API URL (double-check if `/api/agent/verify-otp` is the correct path)
+      const response = await axiosInstance.post(`/agent/verify-otp`, otpData);
+
+      console.log("OTP Verification Response:", response.data);
+      toast.success(response.data.message);
+      
+      navigate("/agents"); // Redirect to Agent Home Page
+      setTimeout(() => {
+        navigate("/agents");
+      }, 2000);
+
+
+       
+    } catch (error) {
+  
+      if (error.response) {
+      
+        setOtpError(error.response.data.message || "Invalid OTP. Please try again.");
+        toast.error(error.response.data.message || "Invalid OTP.");
+      } else {
+        setOtpError("Something went wrong. Please try again later.");
+        toast.error("Server Error.");
+      }
+    }
+
+    setIsLoading(false);
   };
 
   const maskedEmail = email.replace(/(.{2})(.*)(@.*)/, "$1****$3");
@@ -62,24 +66,24 @@ function OTPForm({ onVerify, email }) {
   return (
     <form onSubmit={handleOtpSubmit} className="space-y-4">
       <h3 className="text-xl md:text-2xl font-semibold text-center">OTP Verification</h3>
-      <p className="text-center">An OTP has been sent to {maskedEmail}. It is valid for 5 minutes.</p>
-      <InputField label="OTP" type="text" name="otp" value={otpInput} onChange={handleOtpChange} error={otpError} />
-      {isLoading ? (
-        <p className="text-center">Verifying...</p>
-      ) : (
-        <>
-          <button type="submit" className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg">Verify OTP</button>
-          <button 
-            type="button" 
-            onClick={resendOtp} 
-            className={`w-full py-3 border rounded-lg mt-2 ${canResend ? 'text-blue-500' : 'text-gray-400 cursor-not-allowed'}`} 
-            disabled={!canResend}
-          >
-            {canResend ? "Resend OTP" : `Resend OTP in ${timer}s`}
-          </button>
-        </>
-      )}
-      {otpSuccess && <p className="text-green-500 text-sm text-center">{otpSuccess}</p>}
+      <p className="text-center">An OTP has been sent to {maskedEmail}. Please enter it below.</p>
+      
+      <InputField
+        label="OTP"
+        type="text"
+        name="otp"
+        value={otpInput}
+        onChange={handleOtpChange}
+        error={otpError}
+      />
+
+      <button
+        type="submit"
+        className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg"
+        disabled={isLoading}
+      >
+        {isLoading ? "Verifying..." : "Verify OTP"}
+      </button>
     </form>
   );
 }
