@@ -8,6 +8,7 @@ import AgentView from '../pages/agents/AgentView';
 import AgentDetails from '../pages/agents/AgentDetails';
 import UserView from '../pages/user/UserView';
 import ChatPage from '../pages/chating/ChatPage';
+import AgentChatPage from '../pages/chating/agentChat/AgentChatPage';
 
 // Lazy load the components
 const Dashboard = lazy(() => import("../pages/Dashboard"));
@@ -291,7 +292,7 @@ const AppRoutes = () => {
           }
         />
 
-<Route
+        <Route
           path="/chat"
           element={
             token ? (
@@ -305,7 +306,34 @@ const AppRoutes = () => {
         />
 
 
+
+        <Route
+          path="/agent-chat/agent"
+          element={
+            token ? (
+              <Layout>
+                <AgentChatPage />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
 <Route
+          path="/agent-chat/agent/:targetId"
+          element={
+            token ? (
+              <Layout>
+                <AgentChatPage />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+        <Route
           path="/user/view"
           element={
             token ? (

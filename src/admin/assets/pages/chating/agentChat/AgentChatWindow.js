@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { NOPROFILE } from "../../../../utils/imgpath";
+import React, { useRef, useEffect } from "react";
+import { NOPROFILE } from "../../../../../utils/imgpath";
 
 const ChatWindow = ({ messages, userId }) => {
   const chatEndRef = useRef(null);
@@ -14,26 +14,21 @@ const ChatWindow = ({ messages, userId }) => {
         <p className="text-gray-500 text-center">No messages yet.</p>
       ) : (
         messages.map((msg, index) => {
-          const isSender = msg.sender === userId;
           const formattedTime = new Date(msg.timestamp).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           });
 
           return (
-            <div key={index} className={`chat ${isSender ? "chat-end" : "chat-start"}`}>
+            <div key={index} className={`chat ${msg.sender === userId ? "chat-end" : "chat-start"}`}>
               <div className="chat-image avatar">
-                <div className="w-10 h-10 rounded-full overflow-hidden shadow-2xl">
-                  <img alt="User Avatar" src={NOPROFILE} className="object-cover" />
+                <div className="w-10 rounded-full">
+                  <img alt="User Avatar" src={NOPROFILE} />
                 </div>
               </div>
-              <div
-                className={`chat-bubble max-w-xs px-4 py-3 rounded-xl shadow-md font-bold ${
-                  isSender ? "bg-gray-500 text-white" : "bg-blue-400 text-white"
-                }`}
-              >
+              <div className="chat-bubble">
                 {msg.message}
-                <div className="text-xs text-gray-700 mt-1 text-right">{formattedTime}</div>
+                <div className="text-xs text-gray-500 mt-1">{formattedTime}</div>
               </div>
             </div>
           );
