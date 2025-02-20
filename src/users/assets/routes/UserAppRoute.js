@@ -6,7 +6,7 @@ import Layout from "../component/layouts/Layout";
 
 import ChatPage from "../chating/ChatPage";
 import UserLay from "../component/UserLay";
-import AdminChat from "../component/AdminChat";
+import AdminChat from "../component/chating/AdminChat";
 
 const UserAppRoutes = () => {
   return (

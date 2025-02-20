@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import { createSocketConnection } from "../../../utils/socket";
 import { getUserIdFromCookies } from "../../../utils/auth";
 
 // Custom Hook for handling socket events
 const useChatSocket = (userId, targetId, setMessages) => {
-  const socketRef = useRef(null);
 
+  
+  console.log(userId)
+  const socket = createSocketConnection();
+
+ 
   useEffect(() => {
     if (!userId || !targetId) return;
-
-    socketRef.current = createSocketConnection();
-    const socket = socketRef.current;
 
     socket.emit("joinChat", { userId, targetId });
 
@@ -28,34 +30,32 @@ const useChatSocket = (userId, targetId, setMessages) => {
     });
 
     return () => {
-      socket.disconnect();
       socket.off("joinSuccess");
       socket.off("messageReceived");
       socket.off("joinError");
     };
-  }, [userId, targetId, setMessages]);
+  }, [userId, targetId, socket, setMessages]);
 
-  return socketRef.current; // ✅ Return the socket instance, not ref
+  return socket;
 };
 
 const ChatPage = () => {
   const { targetId } = useParams(); // Get target user ID from URL
-  const userId = "67b48f04fb52c524f49ac383"; // Get logged-in user ID
-  const [messages, setMessages] = useState([]); // ✅ Fixed state name
+  const userId = "67b48f04fb52c524f49ac383"; // Get logged-in user ID from cookies
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const socket = useChatSocket(userId, targetId, setMessages); // ✅ Use the actual socket
+  const socket = useChatSocket(userId, targetId, setMessages);
+
 
   const sendMessage = () => {
-    if (!newMessage.trim() || !socket) return;
+    if (!newMessage.trim()) return;
 
-    const timestamp = new Date().toISOString(); // ✅ Define timestamp
-    const messageData = { userId, targetId, message: newMessage, timestamp };
-
+    const messageData = { userId, targetId, message: newMessage };
     socket.emit("sendMessage", messageData);
 
     // Add message to UI instantly
-    setMessages((prev) => [...prev, { sender: userId, message: newMessage, timestamp }]);
+    setMessages((prev) => [...prev, { sender: userId, message: newMessage }]);
     setNewMessage(""); // Clear input field
   };
 

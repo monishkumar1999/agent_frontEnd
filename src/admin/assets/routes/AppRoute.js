@@ -17,6 +17,7 @@ const Master = lazy(() => import("../pages/Master/Master"));
 const AppRoutes = () => {
   const token = Cookies.get("auth_token");
 
+  console.log(token)
   return (
     <Suspense
       fallback={
