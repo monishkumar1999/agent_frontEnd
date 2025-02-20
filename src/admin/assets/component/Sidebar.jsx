@@ -60,6 +60,7 @@ const Sidebar = () => {
         { key: 'add-product', label: 'Users List', path: '/admin/user/view', icon: <FaProductHunt /> },
       ],
     },
+    { key: 'chat', label: 'Chat', path: '/admin/chat', icon: <FaTachometerAlt /> },
   ];
 
   return (

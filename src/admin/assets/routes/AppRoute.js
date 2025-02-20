@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import AgentView from '../pages/agents/AgentView';
 import AgentDetails from '../pages/agents/AgentDetails';
 import UserView from '../pages/user/UserView';
+import ChatPage from '../pages/chating/ChatPage';
 
 // Lazy load the components
 const Dashboard = lazy(() => import("../pages/Dashboard"));
@@ -278,6 +279,20 @@ const AppRoutes = () => {
 
 
         <Route
+          path="/chat/:targetId"
+          element={
+            token ? (
+              <Layout>
+                <ChatPage />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+
+<Route
           path="/user/view"
           element={
             token ? (
@@ -289,7 +304,6 @@ const AppRoutes = () => {
             )
           }
         />
-
 
         {/* Catch-all Route for Unknown Paths */}
         <Route

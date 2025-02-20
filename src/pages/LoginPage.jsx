@@ -1,11 +1,21 @@
 import { useState } from "react";
-import LoginForm from "../pages/user/LoginForm";
+import SignUpForm from "./user/SignUpForm";
 import SignInForm from "../pages/user/SigninForm";
 import OTPForm from "../pages/user/OtpForm";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("signup");
   const [showOTP, setShowOTP] = useState(false);
+  const [userEmail, setUserEmail] = useState(""); // Store email
+
+  // Function to reset state when switching tabs
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setShowOTP(false);
+    setUserEmail(""); // Reset email when switching tabs
+  };
 
   return (
     <div className="relative min-h-screen flex items-center">
@@ -29,7 +39,7 @@ const LoginPage = () => {
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-500"
               }`}
-              onClick={() => setActiveTab("signup")}
+              onClick={() => handleTabChange("signup")}
             >
               Sign Up
             </button>
@@ -39,7 +49,7 @@ const LoginPage = () => {
                   ? "border-b-4 border-blue-500 text-blue-500"
                   : "text-gray-500"
               }`}
-              onClick={() => setActiveTab("signin")}
+              onClick={() => handleTabChange("signin")}
             >
               Sign In
             </button>
@@ -49,11 +59,31 @@ const LoginPage = () => {
         {/* Forms */}
         <div className="w-full mt-4 flex flex-col justify-between">
           {showOTP ? (
-            <OTPForm onVerify={() => console.log("Redirect to another page")} />
+            <>
+              <OTPForm
+                email={userEmail}
+                onVerify={() => {
+                  // console.log("OTP Verified, Redirecting...");
+                  //redirect
+
+                  navigate("/user/home");
+                }}
+              />
+            </>
           ) : activeTab === "signup" ? (
-            <LoginForm onSubmit={() => setShowOTP(true)} />
+            <SignUpForm
+              onSubmit={(email) => {
+                setUserEmail(email); // Store email
+                setShowOTP(true);
+              }}
+            />
           ) : (
-            <SignInForm onSubmit={() => setShowOTP(true)} />
+            <SignInForm
+              onSubmit={(email) => {
+                setUserEmail(email); // Store email
+                setShowOTP(true);
+              }}
+            />
           )}
         </div>
       </div>
