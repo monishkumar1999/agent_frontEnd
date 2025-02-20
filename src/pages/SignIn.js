@@ -72,7 +72,7 @@ function SignIn({ onLoginSuccess }) {
           className="absolute right-3 top-9 text-gray-600"
           onClick={() => setShowPassword((prev) => !prev)} // Toggle password visibility
         >
-          {showPassword ? <EyeOff size={20}/> : "👁"}
+          {showPassword ? <EyeOff size={20}/> : <Eye size={20}/>}
         </button>
       </div>
       <div className="text-right text-sm md:text-base">

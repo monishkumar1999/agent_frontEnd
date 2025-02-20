@@ -139,7 +139,7 @@ function SignUp({ onSignupSuccess }) {
           className="absolute right-3 top-9 text-gray-600"
           onClick={() => setShowPassword(!showPassword)}
         >
-          {showPassword ? <EyeOff size={20}/> : "👁"} {/* Toggle eye icon */}
+          {showPassword ? <EyeOff size={20}/> : <Eye size={20}/>} {/* Toggle eye icon */}
         </button>
       </div>
 
@@ -158,7 +158,7 @@ function SignUp({ onSignupSuccess }) {
           className="absolute right-3 top-9 text-gray-600"
           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
         >
-          {showConfirmPassword ? <EyeOff size={20}/> : "👁"}
+          {showConfirmPassword ? <EyeOff size={20}/> : <Eye size={20}/>}
         </button>
       </div>
 
