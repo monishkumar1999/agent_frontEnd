@@ -1,6 +1,7 @@
 import axios from "axios";
 import server from "../admin/assets/constant";
 
+
 const axiosInstance = axios.create({
   baseURL: server,
   withCredentials: true, // Ensures cookies (JWT) are sent

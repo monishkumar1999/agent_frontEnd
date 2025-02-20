@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setAuthToken } from '../../reduxStore/auth/authSlice';
 import server from '../constant';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const Login = () => {
 
@@ -32,7 +33,7 @@ const Login = () => {
     }
   
     try {
-      const response = await axios.post(`${serverUrl}/admin/login`, {
+      const response = await axiosInstance.post(`/admin/login`, {
         username,
         password,
       }, { withCredentials: true });
