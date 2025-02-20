@@ -81,8 +81,12 @@ const ChatPage = () => {
     <div className="flex h-screen bg-gray-100">
       <ChatSidebar users={users} targetId={targetId} />
       <div className="w-3/4 flex flex-col p-6 bg-gray-50">
-        <ChatWindow messages={messages} userId={userId} />
-        <ChatInput sendMessage={sendMessage} />
+      {targetId && (
+          <>
+            <ChatWindow messages={messages} userId={userId} />
+            <ChatInput sendMessage={sendMessage} />
+          </>
+        )}
       </div>
     </div>
   );
