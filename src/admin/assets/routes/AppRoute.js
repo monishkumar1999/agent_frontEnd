@@ -17,7 +17,6 @@ const Master = lazy(() => import("../pages/Master/Master"));
 const AppRoutes = () => {
   const token = Cookies.get("auth_token");
 
-  console.log(token)
   return (
     <Suspense
       fallback={
@@ -281,6 +280,19 @@ const AppRoutes = () => {
 
         <Route
           path="/chat/:targetId"
+          element={
+            token ? (
+              <Layout>
+                <ChatPage />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+<Route
+          path="/chat"
           element={
             token ? (
               <Layout>
