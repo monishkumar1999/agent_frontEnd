@@ -5,13 +5,17 @@ import Success from "../component/Success";
 import Layout from "../component/layouts/Layout";
 
 import ChatPage from "../chating/ChatPage";
-import UserLay from "../component/UserLay";
+import Profile from "../component/Profile";
 import AdminChat from "../component/chating/AdminChat";
+import DetailsForm from "../component/DetailsForm";
 
 const UserAppRoutes = () => {
   return (
     <Routes>
-      <Route path="home" element={<Layout children={<Success />}></Layout>} />
+      <Route
+        path="success"
+        element={<Layout children={<Success />}></Layout>}
+      />
 
       <Route
         path="chat/:targetId"
@@ -19,12 +23,16 @@ const UserAppRoutes = () => {
       />
 
       <Route
-        path="userlay"
-        element={<Layout children={<UserLay />}></Layout>}
+        path="profile"
+        element={<Layout children={<Profile />}></Layout>}
       />
       <Route
         path="chats"
         element={<Layout children={<AdminChat />}></Layout>}
+      />
+      <Route
+        path="details"
+        element={<Layout children={<DetailsForm />}></Layout>}
       />
     </Routes>
   );

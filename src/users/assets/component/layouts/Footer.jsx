@@ -8,7 +8,7 @@ const Footer = ({
 }) => {
   const privacyPolicyStyle = useMemo(() => {
     return {
-      textDecoration: privacyPolicyTextDecoration,
+      textDecoration: privacyPolicyTextDecoration, 
     };
   }, [privacyPolicyTextDecoration]);
 
