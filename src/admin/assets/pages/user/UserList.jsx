@@ -1,13 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { IMGURL, NOPROFILE } from "../../../../utils/imgpath"; // Default profile image
 
 const UserList = ({ data }) => {
+  const navigate = useNavigate(); // Hook for smooth navigation
+  const handleChatClick = (userId) => {
+    navigate(`/admin/chat/${userId}`); // Navigate without full page reload
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {data.length > 0 ? (
         data.map((user, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow-lg border hover:shadow-xl transition-shadow">
+          <div
+            key={index}
+            className="bg-white p-6 rounded-lg shadow-lg border hover:shadow-xl transition-shadow"
+          >
             {/* User Profile Image */}
             <div className="flex justify-center mb-4">
               <img
@@ -30,22 +38,19 @@ const UserList = ({ data }) => {
 
             {/* Buttons */}
             <div className="mt-4 space-y-2">
-              <Link
-                to={`/admin/user-details/${user._id}`}
-                className="bg-teal-500 text-white px-4 py-2 rounded-lg block text-center hover:bg-teal-600 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => navigate(`/admin/user-details/${user._id}`)}
+                className="bg-teal-500 text-white px-4 py-2 rounded-lg block text-center hover:bg-teal-600 transition-colors w-full"
               >
                 View Details
-              </Link>
+              </button>
 
-              <Link
-  to={`/admin/chat/${user._id}`} // Navigate to ChatPage with user ID
-  className="bg-blue-500 text-white px-4 py-2 rounded-lg block text-center hover:bg-blue-600 transition-colors"
->
-  Chat
-</Link>
-
+              <button
+                onClick={() => handleChatClick(user._id)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg block text-center hover:bg-blue-600 transition-colors w-full"
+              >
+                Chat
+              </button>
             </div>
           </div>
         ))

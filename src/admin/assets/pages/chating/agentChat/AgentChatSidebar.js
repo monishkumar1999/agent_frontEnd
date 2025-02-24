@@ -24,6 +24,8 @@ const ChatSidebar = ({ targetId }) => {
 
   return (
     <div className="w-1/4 bg-white shadow-md p-4 overflow-y-auto">
+<p className="font-playwrite text-lg">This is Playwrite IT Moderna font.</p>
+
       <h2 className="text-xl font-semibold mb-4">Chats</h2>
       <ul>
         {chats.map((chat) => (

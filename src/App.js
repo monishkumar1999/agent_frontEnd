@@ -5,8 +5,8 @@ import Router from "./Router"; // Import Router component
 export default function App() {
   return (
     <React.Fragment>
-      <Toaster /> {/* Add Toaster */}
-      <Router /> {/* Router component will provide the routing context */}
+      <Toaster/>
+      <Router/> 
     </React.Fragment>
   );
 }
