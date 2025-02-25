@@ -3,6 +3,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        playwrite: ["Playwrite IT Moderna", "sans-serif"],
+      },
       colors: {
         "base-white": "#fff",
         whitesmoke: "#ececec",
