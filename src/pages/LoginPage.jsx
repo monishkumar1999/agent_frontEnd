@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SignUpForm from "./user/SignUpForm";
 import SignInForm from "../pages/user/SigninForm";
 import OTPForm from "../pages/user/OtpForm";
-import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode"; // ✅ Import jwtDecode
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("signup");
   const [showOTP, setShowOTP] = useState(false);
   const [userEmail, setUserEmail] = useState(""); // Store email
+
+  const token = Cookies.get("authToken"); // ✅ Get token from cookies
+
+  // ✅ Redirect only if token exists AND user has role "user"
+  useEffect(() => {
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token); // ✅ Decode JWT token
+        console.log("Decoded Token:", decodedToken); // Debugging log
+
+        if (decodedToken.role === "user") {
+          navigate("/user/profile", { replace: true }); // ✅ Redirect user to profile
+        }
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, [token, navigate]);
 
   // Function to reset state when switching tabs
   const handleTabChange = (tab) => {
@@ -59,17 +79,12 @@ const LoginPage = () => {
         {/* Forms */}
         <div className="w-full mt-4 flex flex-col justify-between">
           {showOTP ? (
-            <>
-              <OTPForm
-                email={userEmail}
-                onVerify={() => {
-                  // console.log("OTP Verified, Redirecting...");
-                  //redirect
-
-                  navigate("/user/home");
-                }}
-              />
-            </>
+            <OTPForm
+              email={userEmail}
+              onVerify={() => {
+                navigate("/user/profile"); // ✅ Redirect to user profile after OTP verification
+              }}
+            />
           ) : activeTab === "signup" ? (
             <SignUpForm
               onSubmit={(email) => {

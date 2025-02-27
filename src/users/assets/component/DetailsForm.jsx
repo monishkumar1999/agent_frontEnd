@@ -1,49 +1,18 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { updateDetails } from "../../../admin/reduxStore/user/detailsSlice";
 import { ArrowRight, Home, MapPin, ClipboardList } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PropertyStep from "./Proposal/Property/Property";
 import LocationStep from "./Proposal/Location/Location";
 import NeedsStepper from "./Proposal/YourNeeds/Needs";
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { Provider, useDispatch, useSelector } from "react-redux";
 
-// Redux Slice for managing form state
-const detailsSlice = createSlice({
-  name: "details",
-  initialState: {
-    propertyType: "",
-    bedroomCount: "",
-    weeklyOrSaleValue: "",
-    location: "",
-    pincode: "",
-    selectedPlan: "",
-    selectedPurpose: "",
-    selectedUserCommunication: "",
-    isLegalReady: "",
-    isAssistance: "",
-  },
-  reducers: {
-    updateDetails: (state, action) => {
-      return { ...state, ...action.payload };
-    },
-  },
-});
-
-const { updateDetails } = detailsSlice.actions;
-
-// Create Redux store
-const store = configureStore({
-  reducer: {
-    details: detailsSlice.reducer,
-  },
-});
+import axiosInstance from "../../../utils/axiosInstance";
 
 const DetailsForm = () => {
   const details = useSelector((state) => state.details);
   const dispatch = useDispatch();
-  const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
     { id: "01", label: "About Property", component: PropertyStep, icon: Home },
@@ -56,6 +25,8 @@ const DetailsForm = () => {
     },
   ];
 
+  const [currentStep, setCurrentStep] = useState(0);
+
   const validateCurrentStep = () => {
     if (currentStep === 0) {
       if (
@@ -65,9 +36,7 @@ const DetailsForm = () => {
       ) {
         toast.error(
           "Please fill all fields in 'About Property' before proceeding!",
-          {
-            position: "top-center",
-          }
+          { position: "top-center" }
         );
         return false;
       }
@@ -86,18 +55,14 @@ const DetailsForm = () => {
       ) {
         toast.error(
           "Please fill all fields in 'Your Needs' before proceeding!",
-          {
-            position: "top-center",
-          }
+          { position: "top-center" }
         );
         return false;
       }
       if (!details.isLegalReady || !details.isAssistance) {
         toast.error(
           "Please select options for mortgage and assistance before proceeding!",
-          {
-            position: "top-center",
-          }
+          { position: "top-center" }
         );
         return false;
       }
@@ -117,14 +82,45 @@ const DetailsForm = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (details) => {
     if (validateCurrentStep()) {
-      console.log("Submitted Details:", details);
-      alert("Form Submitted Successfully!");
+      const backendFields = {
+        propertyType: "propertyType",
+        bedroomCount: "noOfBedRooms",
+        weeklyOrSaleValue: "price_range",
+        pincode: "pincode",
+        selectedPlan: "property_buying_plain",
+        selectedPurpose: "purpose_purchase",
+        selectedUserCommunication: "communicate_preferred",
+      };
+
+      // Transform details to match API parameters
+      const formattedDetails = Object.keys(backendFields).reduce((acc, key) => {
+        if (details[key]?.id) {
+          acc[backendFields[key]] = details[key].id; // Store only the ID for backend-connected fields
+        } else {
+          acc[backendFields[key]] = details[key]; // Store other details as-is
+        }
+        return acc;
+      }, {});
+
+      console.log("Submitting Data:", formattedDetails); // Debugging log
+
+      try {
+        const response = await axiosInstance.post(
+          "/user/store-proposal",
+          formattedDetails
+        );
+        console.log("Response from server:", response.data);
+        alert("Form Submitted and Stored Successfully!");
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("Failed to store data. Please try again.");
+      }
     }
   };
 
-  const updateDetailsHandler = (newData) => {
+  const handleUpdateDetails = (newData) => {
     dispatch(updateDetails(newData));
   };
 
@@ -171,7 +167,7 @@ const DetailsForm = () => {
           <div className="bg-white p-6 rounded-lg shadow-md">
             {React.createElement(steps[currentStep].component, {
               details,
-              updateDetails: updateDetailsHandler,
+              updateDetails: handleUpdateDetails,
             })}
           </div>
 
@@ -189,7 +185,9 @@ const DetailsForm = () => {
             </button>
             <button
               onClick={
-                currentStep === steps.length - 1 ? handleSubmit : handleNext
+                currentStep === steps.length - 1
+                  ? () => handleSubmit(details)
+                  : handleNext
               }
               className="py-3 px-6 rounded-full border-2 border-violet-800 text-violet-800 bg-white text-lg font-semibold transition-all hover:bg-violet-100"
             >
@@ -203,10 +201,4 @@ const DetailsForm = () => {
   );
 };
 
-const App = () => (
-  <Provider store={store}>
-    <DetailsForm />
-  </Provider>
-);
-
-export default App;
+export default DetailsForm;
