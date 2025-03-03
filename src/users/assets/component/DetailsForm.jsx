@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { updateDetails } from "../../../admin/reduxStore/user/detailsSlice";
 import { ArrowRight, Home, MapPin, ClipboardList } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
@@ -13,6 +14,7 @@ import axiosInstance from "../../../utils/axiosInstance";
 const DetailsForm = () => {
   const details = useSelector((state) => state.details);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const steps = [
     { id: "01", label: "About Property", component: PropertyStep, icon: Home },
@@ -88,6 +90,7 @@ const DetailsForm = () => {
         propertyType: "propertyType",
         bedroomCount: "noOfBedRooms",
         weeklyOrSaleValue: "price_range",
+        location: "location",
         pincode: "pincode",
         selectedPlan: "property_buying_plain",
         selectedPurpose: "purpose_purchase",
@@ -104,6 +107,36 @@ const DetailsForm = () => {
         return acc;
       }, {});
 
+      if (formattedDetails.pincode) {
+        formattedDetails.pincode = formattedDetails.pincode
+          .split(",")
+          .map((pin) => pin.trim());
+      }
+      if (formattedDetails.price_range) {
+        const priceMatch = formattedDetails.price_range.match(
+          /\$?([\d.]+)(k|m)?\s*to\s*\$?([\d.]+)(k|m)?/i
+        );
+
+        if (priceMatch) {
+          const convertToNumber = (value, unit) => {
+            let num = parseFloat(value);
+            if (unit === "k") return num * 1000; // Convert "200k" → 200000
+            if (unit === "m") return num * 1000000; // Convert "1m" → 1000000
+            return num;
+          };
+
+          formattedDetails.price_range = {
+            min: convertToNumber(priceMatch[1], priceMatch[2]),
+            max: convertToNumber(priceMatch[3], priceMatch[4]),
+          };
+        } else {
+          console.error(
+            "Invalid price range format:",
+            formattedDetails.price_range
+          );
+        }
+      }
+
       console.log("Submitting Data:", formattedDetails); // Debugging log
 
       try {
@@ -112,10 +145,31 @@ const DetailsForm = () => {
           formattedDetails
         );
         console.log("Response from server:", response.data);
-        alert("Form Submitted and Stored Successfully!");
+
+        // Ensure response is valid before navigating
+        if (response.status === 200 || response.status === 201) {
+          toast.success("Form Submitted Successfully!", {
+            position: "top-center",
+          });
+
+          const proposalId = response.data.data?._id || response.data?.id;
+
+          console.log(proposalId);
+
+          if (proposalId) {
+            // Redirect to the proposal page with the correct ID
+            setTimeout(() => {
+              navigate(`/user/proposal/${proposalId}`);
+            }, 1000);
+          } else {
+            console.error("Proposal ID not found in response.");
+          }
+        }
       } catch (error) {
         console.error("Error submitting form:", error);
-        alert("Failed to store data. Please try again.");
+        toast.error("Failed to store data. Please try again.", {
+          position: "top-center",
+        });
       }
     }
   };

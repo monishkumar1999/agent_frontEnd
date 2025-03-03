@@ -11,6 +11,7 @@ const UserAppRouteWrapper = () => {
   useEffect(() => {
     const token = Cookies.get("authToken"); // Retrieve JWT token from cookies
 
+    console.log(token);
     if (token) {
       try {
         const decodedToken = jwtDecode(token); // Decode the JWT token

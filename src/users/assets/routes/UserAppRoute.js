@@ -9,6 +9,8 @@ import AdminChat from "../component/chating/AdminChat";
 import DetailsForm from "../component/DetailsForm";
 import LoginPage from "../../../pages/LoginPage"; // ✅ Use LoginPage instead of UserLogin
 import UserAppRouteWrapper from "./UserAppRouteWrapper"; // ✅ Protects user routes
+import Proposal from "../component/Proposal";
+import AgentProfile from "../component/AgentProfile";
 
 const UserAppRoutes = () => {
   return (
@@ -65,7 +67,23 @@ const UserAppRoutes = () => {
             </Layout>
           }
         />
+        <Route
+          path="proposal/:id"
+          element={
+            <Layout>
+              <Proposal />
+            </Layout>
+          }
+        />
       </Route>
+      <Route
+        path="/agent/:agentId"
+        element={
+          <layout>
+            <AgentProfile />
+          </layout>
+        }
+      />
 
       {/* ✅ Redirect unknown user routes to profile */}
       <Route path="*" element={<Navigate to="/user/profile" />} />
