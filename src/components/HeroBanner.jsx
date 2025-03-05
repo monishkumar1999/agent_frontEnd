@@ -41,7 +41,7 @@ const HeroBanner = ({ scrollToAgents }) => {
         
         {/* Left Section */}
         <div className="lg:w-1/2 text-center lg:text-left">
-          <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-gray-900">
+          <h1 className="text-4xl lg:text-4xl font-bold leading-tight text-gray-900">
           Buyer Agents Work for YOU, <br />
           Not the Seller,<br />
            
@@ -55,31 +55,55 @@ const HeroBanner = ({ scrollToAgents }) => {
             <button className= "bg-blueviolet text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-lg  bg-blueviolet 800 transition">
              FindMY Agent
             </button>
-            <span className="text-4xl lg:text-6xl font-bold leading-tight text-gray-900">
-                <motion.span 
-                className="absolute -bottom-1 left-0 w-full h-3  bg-blueviolet"
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1 }}
-              />
-            </span>
             </div>
             <div className="mt-6 flex justify-center lg:justify-start space-x-6 text-gray-600">
-            <span className="flex items-center"><CheckCircle size={20} className="mr-2 text-gray-700" /> Learn with experts</span>
-            <span className="flex items-center"><CheckCircle size={20} className="mr-2 text-gray-700" /> Get certificate</span>
-            <span className="flex items-center"><CheckCircle size={20} className="mr-2 text-gray-700" /> Get membership</span>
+            <span className="flex items-center bg-blueviolet p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Experienced Agents</span>
+            <span className="flex items-center  bg-blueviolet p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Trustfull Propertiy</span>
+            <span className="flex items-center  bg-blueviolet p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Secure Payment</span>
           </div>
         </div>
          {/* Right Section */}
          <div className="lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
           <motion.img 
-            src="public/images/sale.png" 
+            src="/images/sale.png" 
             alt="Agent" 
-            className="w-[85%] max-w-lg rounded-lg shadow-lg"
+            className="w-[85%] max-w-lg rounded-lg "
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8 }}
           />
+          {/* Floating Elements */}
+          <motion.div 
+            className="absolute top-6 left-6 bg-white p-2  rounded-lg"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <img src="https://www.thehousedesigners.com/blog/wp-content/uploads/2015/01/Best-selling-House-Plan-Espresso-House-Plan.jpg" alt="Angular" className="w-10 h-10"/>
+          </motion.div>
+
+          <motion.div 
+            className="absolute bottom-6 right-6 bg-white p-2  rounded-lg"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST5bfHF7mHV-bs9ekJv9l3g4iSLo7C_Checw&s  " alt="Figma" className="w-10 h-10"/>
+          </motion.div>
+          {/* New Agents Widget */}
+          <motion.div 
+            className="absolute top-20 right-10 bg-green-500 text-white p-4 rounded-lg flex items-center shadow-lg"
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="flex -space-x-2">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" className="w-8 h-8 rounded-full border-2 border-white" />
+              <img src="https://randomuser.me/api/portraits/women/45.jpg" className="w-8 h-8 rounded-full border-2 border-white" />
+              <img src="https://randomuser.me/api/portraits/men/65.jpg" className="w-8 h-8 rounded-full border-2 border-white" />
+            </div>
+            <span className="ml-3 text-sm">Our daily new Agents <br /> <span className="text-lg font-bold">2+</span></span>
+          </motion.div>
           </div>
       </div>
     </div>
