@@ -62,6 +62,7 @@ const Sidebar = () => {
     },
     { key: 'chat', label: 'Chating Users', path: '/admin/chat', icon: <FaTachometerAlt /> },
     { key: 'chat', label: 'Chating Agent', path: '/admin/agent-chat/agent', icon: <FaTachometerAlt /> },
+    { key: 'chat', label: 'Swipper', path: '/admin/swipper', icon: <FaTachometerAlt /> },
   ];
 
   return (

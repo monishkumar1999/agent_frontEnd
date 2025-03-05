@@ -9,6 +9,7 @@ import AgentDetails from '../pages/agents/AgentDetails';
 import UserView from '../pages/user/UserView';
 import ChatPage from '../pages/chating/ChatPage';
 import AgentChatPage from '../pages/chating/agentChat/AgentChatPage';
+import AgentSwipper from '../pages/swipper/AgentSwipper';
 
 // Lazy load the components
 const Dashboard = lazy(() => import("../pages/Dashboard"));
@@ -339,6 +340,19 @@ const AppRoutes = () => {
             token ? (
               <Layout>
                 <UserView />
+              </Layout>
+            ) : (
+              <Navigate to="/admin/login" replace />
+            )
+          }
+        />
+
+<Route
+          path="/swipper"
+          element={
+            token ? (
+              <Layout>
+                <AgentSwipper />
               </Layout>
             ) : (
               <Navigate to="/admin/login" replace />
