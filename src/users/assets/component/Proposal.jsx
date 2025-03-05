@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
 import { useParams, useNavigate } from "react-router-dom";
+import { IMGURL, NOPROFILE } from "../../../utils/imgpath";
 
 const Proposal = () => {
   const [agents, setAgents] = useState([]);
@@ -54,7 +55,7 @@ const Proposal = () => {
               className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center text-center"
             >
               <img
-                src={agent.profile_img || "/default-avatar.png"}
+                src={agent.profile_img ? IMGURL + agent.profile_img : NOPROFILE}
                 alt={agent.firstName || "Agent"}
                 className="w-24 h-24 rounded-full object-cover mb-3"
               />

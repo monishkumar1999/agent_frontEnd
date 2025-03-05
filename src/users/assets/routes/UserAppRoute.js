@@ -75,15 +75,16 @@ const UserAppRoutes = () => {
             </Layout>
           }
         />
+
+        <Route
+          path="/agent/:agentId"
+          element={
+            <Layout>
+              <AgentProfile />
+            </Layout>
+          }
+        />
       </Route>
-      <Route
-        path="/agent/:agentId"
-        element={
-          <layout>
-            <AgentProfile />
-          </layout>
-        }
-      />
 
       {/* ✅ Redirect unknown user routes to profile */}
       <Route path="*" element={<Navigate to="/user/profile" />} />
