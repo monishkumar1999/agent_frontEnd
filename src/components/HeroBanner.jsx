@@ -65,7 +65,7 @@ const HeroBanner = ({ scrollToAgents }) => {
          {/* Right Section */}
          <div className="lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
           <motion.img 
-            src="/images/sale.png" 
+            src="/images/a2.png" 
             alt="Agent" 
             className="w-[85%] max-w-lg rounded-lg "
             initial={{ scale: 0.9, opacity: 0 }}
@@ -92,7 +92,7 @@ const HeroBanner = ({ scrollToAgents }) => {
           </motion.div>
           {/* New Agents Widget */}
           <motion.div 
-            className="absolute top-20 right-10 bg-green-500 text-white p-4 rounded-lg flex items-center shadow-lg"
+            className="absolute top-0 right-10 bg-green-500 text-white p-4 rounded-lg flex items-center shadow-lg"
             initial={{ x: 20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 1 }}
