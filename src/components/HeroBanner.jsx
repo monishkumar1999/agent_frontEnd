@@ -41,7 +41,7 @@ const HeroBanner = ({ scrollToAgents }) => {
         
         {/* Left Section */}
         <div className="lg:w-1/2 text-center lg:text-left">
-          <h1 className="text-4xl lg:text-4xl font-bold leading-tight text-gray-900">
+          <h1 className="text-4xl lg:text-4xl font-jerom-bold leading-tight text-gray-900">
           Buyer Agents Work for YOU, <br />
           Not the Seller,<br />
            
@@ -65,7 +65,7 @@ const HeroBanner = ({ scrollToAgents }) => {
          {/* Right Section */}
          <div className="lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
           <motion.img 
-            src="/images/a3.jpg" 
+            src="/images/a3.png" 
             alt="Agent" 
             className="w-[85%] max-w-lg rounded-lg "
             initial={{ scale: 0.9, opacity: 0 }}

@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         playwrite: ["Playwrite IT Moderna", "sans-serif"],
+        jerom:["Manrope"],
       },
       colors: {
         "base-white": "#fff",
