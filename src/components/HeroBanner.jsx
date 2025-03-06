@@ -65,7 +65,7 @@ const HeroBanner = ({ scrollToAgents }) => {
          {/* Right Section */}
          <div className="lg:w-1/2 flex justify-center relative mt-12 lg:mt-0">
           <motion.img 
-            src="/images/a2.png" 
+            src="/images/a3.jpg" 
             alt="Agent" 
             className="w-[85%] max-w-lg rounded-lg "
             initial={{ scale: 0.9, opacity: 0 }}
