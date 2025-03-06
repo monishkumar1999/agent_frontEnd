@@ -57,9 +57,9 @@ const HeroBanner = ({ scrollToAgents }) => {
             </button>
             </div>
             <div className="mt-6 flex justify-center lg:justify-start space-x-6 text-gray-600">
-            <span className="flex items-center bg-blueviolet p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Experienced Agents</span>
-            <span className="flex items-center  bg-blueviolet p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Trustfull Propertiy</span>
-            <span className="flex items-center  bg-blueviolet p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Secure Payment</span>
+            <span className="flex items-center bg-[#678CEC]  p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Experienced Agents</span>
+            <span className="flex items-center  bg-[#678CEC] p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Trustfull Propertiy</span>
+            <span className="flex items-center  bg-[#678CEC] p-1 rounded-md text-white"><CheckCircle size={20} className="mr-2 text-gray-700" /> Secure Payment</span>
           </div>
         </div>
          {/* Right Section */}
@@ -79,7 +79,7 @@ const HeroBanner = ({ scrollToAgents }) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <img src="https://www.thehousedesigners.com/blog/wp-content/uploads/2015/01/Best-selling-House-Plan-Espresso-House-Plan.jpg" alt="Angular" className="w-10 h-10"/>
+            <img src="/images/home3.jpg" alt="h1" className="w-10 h-10"/>
           </motion.div>
 
           <motion.div 
@@ -88,7 +88,7 @@ const HeroBanner = ({ scrollToAgents }) => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST5bfHF7mHV-bs9ekJv9l3g4iSLo7C_Checw&s  " alt="Figma" className="w-10 h-10"/>
+            <img src="/images/home2.jpg" alt="h2" className="w-10 h-10"/>
           </motion.div>
           {/* New Agents Widget */}
           <motion.div 
