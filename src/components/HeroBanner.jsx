@@ -46,7 +46,7 @@ const HeroBanner = ({ scrollToAgents }) => {
           Not the Seller,<br />
            
           </h1>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-4 text-lg font-athiban text-gray-600">
           Your Interests Come First!<br />
           Your one-stop platform for finding the right agent,
           tailored to your needs.

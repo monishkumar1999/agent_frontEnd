@@ -6,6 +6,7 @@ module.exports = {
       fontFamily: {
         playwrite: ["Playwrite IT Moderna", "sans-serif"],
         jerom:["Emblema One"],
+        athiban:["Noto Serif"],
       },
       colors: {
         "base-white": "#fff",
