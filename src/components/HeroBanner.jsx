@@ -37,11 +37,11 @@ const HeroBanner = ({ scrollToAgents }) => {
     //   </div>
     // </div>
     <div className="min-h-screen flex items-center justify-center bg-white px-6 lg:px-20">
-      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center justify-between">
+      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center justify-between relative">
         
         {/* Left Section */}
-        <div className="lg:w-1/2 text-center lg:text-left">
-          <h1 className="text-4xl lg:text-4xl font-jerom-bold leading-tight text-gray-900">
+        <div className="lg:w-1/2 text-center lg:text-left ">
+          <h1 className="text-4xl lg:text-4xl  font-bold leading-tight text-gray-900 absolute top-2">
           Buyer Agents Work for YOU, <br />
           Not the Seller,<br />
            
@@ -52,7 +52,7 @@ const HeroBanner = ({ scrollToAgents }) => {
           tailored to your needs.
           </p>
             <div className="mt-6 flex justify-center lg:justify-start space-x-4">
-            <button className= "bg-blueviolet text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-lg  bg-blueviolet 800 transition">
+            <button className= "bg-blueviolet text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-lg 800 transition">
              FindMY Agent
             </button>
             </div>
