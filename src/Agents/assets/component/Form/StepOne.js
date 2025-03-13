@@ -8,7 +8,7 @@ const StepOne = ({ errors = {} }) => {
   const formData = useSelector((state) => state.form.formData);
   const [describes_agent, setdescribes_agent] = useState([]);
   const [roles, setRoles] = useState([]);
-  const [loading, setLoading] = useState({ roles: true, descriptions: true });
+  const [loading, setLoading] = useState({ roles: true, descriptions: true, existingData: true });
 
   useEffect(() => {
     const fetchRoleDescriptions = async () => {
@@ -37,9 +37,35 @@ const StepOne = ({ errors = {} }) => {
       }
     };
 
+    const fetchExistingData = async () => {
+      try {
+        const response = await axiosInstance.get("/agent/get-agent-details");
+        if (response.data && response.data.status === "true" && response.data.data) {
+          const agentData = response.data.data;
+          
+          // Check if agentDetails exists in the response
+          if (agentData.agentDetails) {
+            // Update the Redux store with the fetched data
+            dispatch(updateFormData({
+              aboutAgent: agentData.agentDetails.aboutAgent || "",
+              aboutAgency: agentData.agentDetails.aboutAgency || "",
+              NegotiationStyle: agentData.agentDetails.NegotiationStyle || "",
+              describes_agent: agentData.agentDetails.describes_agent || "",
+              role: agentData.agentDetails.role || ""
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching existing agent data:", error.message);
+      } finally {
+        setLoading((prev) => ({ ...prev, existingData: false }));
+      }
+    };
+
     fetchRoleDescriptions();
     fetchRoles();
-  }, []);
+    fetchExistingData();
+  }, [dispatch]);
 
   const handleSelection = (field, value) => {
     dispatch(updateFormData({ [field]: value }));
@@ -52,13 +78,15 @@ const StepOne = ({ errors = {} }) => {
 
   return (
     <div>
+      {loading.existingData && <p className="text-gray-500">Loading your information...</p>}
+      
       {/* About You */}
       <label className="block text-gray-700 text-left">About You</label>
       <textarea
         name="aboutAgent"
-        value={formData.aboutAgent}
+        value={formData.aboutAgent || ""}
         onChange={handleChange}
-        className="w-full p-3 border border-indigo-600 rounded-lg mt-2 bg-white text-black"
+        className="w-full p-3 border border-gray-700 rounded-lg mt-2 bg-white text-black"
         placeholder="Tell us about yourself..."
       />
       {errors.aboutAgent && <p className="text-red-500">{errors.aboutAgent}</p>}
@@ -67,9 +95,9 @@ const StepOne = ({ errors = {} }) => {
       <label className="block text-gray-700 text-left mt-4">Describe about Your Agency</label>
       <textarea
         name="aboutAgency"
-        value={formData.aboutAgency}
+        value={formData.aboutAgency || ""}
         onChange={handleChange}
-        className="w-full p-3 border border-indigo-600 rounded-lg mt-2 bg-white text-black"
+        className="w-full p-3 border border-gray-700 rounded-lg mt-2 bg-white text-black"
         placeholder="Describe about your Agency..."
       />
       {errors.aboutAgency && <p className="text-red-500">{errors.aboutAgency}</p>}
@@ -78,9 +106,9 @@ const StepOne = ({ errors = {} }) => {
       <label className="block text-gray-700 text-left mt-4">Negotiation Style and Approach</label>
       <textarea
         name="NegotiationStyle"
-        value={formData.NegotiationStyle}
+        value={formData.NegotiationStyle || ""}
         onChange={handleChange}
-        className="w-full p-3 border border-indigo-600 rounded-lg mt-2 bg-white text-black"
+        className="w-full p-3 border border-gray-700 rounded-lg mt-2 bg-white text-black"
         placeholder="Describe your negotiation style and approach..."
       />
       {errors.NegotiationStyle && <p className="text-red-500">{errors.NegotiationStyle}</p>}
@@ -96,7 +124,7 @@ const StepOne = ({ errors = {} }) => {
               key={index}
               type="button"
               onClick={() => handleSelection("describes_agent", option)}
-              className={`px-4 py-2 rounded-full border border-indigo-600 ${
+              className={`px-4 py-2 rounded-full border border-gray-700 ${
                 formData.describes_agent === option ? "bg-purple-600 text-white" : "text-gray-600"
               }`}
             >
@@ -120,7 +148,7 @@ const StepOne = ({ errors = {} }) => {
               key={index}
               type="button"
               onClick={() => handleSelection("role", role)}
-              className={`px-4 py-2 rounded-full border border-indigo-600 ${
+              className={`px-4 py-2 rounded-full border border-gray-700 ${
                 formData.role === role ? "bg-purple-600 text-white" : "text-gray-600"
               }`}
             >

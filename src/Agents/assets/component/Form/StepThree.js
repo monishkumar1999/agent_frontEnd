@@ -7,6 +7,9 @@ const StepThree = ({ errors = {}, setErrors }) => {
   const dispatch = useDispatch();
   
   const formData = useSelector((state) => state.form.formData);
+  const [postcodes, setPostcodes] = useState([""]);
+
+  const agentDetails = useSelector((state) => state.form.formData);
   const [servicesOptions, setServicesOptions] = useState([]);
   const [salesMethodOptions, setSalesMethodOptions] = useState([]);
   const [durationOptions, setDurationOptions] = useState([]);
@@ -15,10 +18,8 @@ const StepThree = ({ errors = {}, setErrors }) => {
   const [videoCalltechOptions, setVideoCalltechOptions] = useState([]);
   const [digitalTechOptions, setDigitalTechOptions] = useState([]);
  
-
-  const sales_team_count = useSelector((state) => state.form.formData.sales_team_count);
+  const sales_team_count = useSelector((state) => state.form.formData.sales_team_count || 1);
   
-
   const [loading, setLoading] = useState({
     services: true,
     salesMethods: true,
@@ -27,9 +28,43 @@ const StepThree = ({ errors = {}, setErrors }) => {
     type: true,
     videoCalltech: true,
     digitalTech: true,
+    existingData: true
   });
 
   useEffect(() => {
+    const fetchExistingData = async () => {
+      try {
+        const response = await axiosInstance.get("/agent/get-agent-details");
+        if (response.data && response.data.status === "true" && response.data.data) {
+          const agentData = response.data.data;
+          
+          // Check if agentDetails exists in the response
+          if (agentData.agentDetails) {
+            // Update the Redux store with the fetched data for StepThree fields
+            dispatch(updateFormData({
+              services_provided: agentData.agentDetails.services_provided || "",
+              method_of_sale: agentData.agentDetails.method_of_sale || "",
+              buyer_agency_agreement: agentData.agentDetails.buyer_agency_agreement || "",
+              sales_team_count: agentData.agentDetails.sales_team_count || 1,
+              postCode_cover: agentData.agentDetails.postCode_cover || [0, 0, 0],
+              specialization: agentData.agentDetails.specialization || "",
+              agent_work_type: agentData.agentDetails.agent_work_type || "",
+              videoCall_offer: agentData.agentDetails.videoCall_offer || "",
+              videoCallTech: agentData.agentDetails.videoCallTech || "",
+              digital_solution: agentData.agentDetails.digital_solution || "",
+              fees_structure: agentData.agentDetails.fees_structure || { min: "", max: "" },
+              chargeType: agentData.agentDetails.chargeType || "",
+              fee: agentData.agentDetails.fee || ""
+            }));
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching existing agent data:", error.message);
+      } finally {
+        setLoading((prev) => ({ ...prev, existingData: false }));
+      }
+    };
+
     const fetchOptions = async () => {
       try {
         const [
@@ -125,12 +160,14 @@ const StepThree = ({ errors = {}, setErrors }) => {
           type: false,
           videoCalltech: false,
           digitalTech: false,
+          existingData: loading.existingData
         });
       }
     };
 
+    fetchExistingData();
     fetchOptions();
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (e, parentKey = null) => {
     const { name, value, dataset } = e.target;
@@ -144,29 +181,77 @@ const StepThree = ({ errors = {}, setErrors }) => {
 
     if (name === "postCode_cover") {
         const index = parseInt(dataset.index, 10);
-        const updatedPostCodes = [...formData.postCode_cover];
+        const updatedPostCodes = [...(formData.postCode_cover || ["", "", "", ""])];
 
-        // Ensure the index exists and replace null with an empty string
-        updatedPostCodes[index] = value.trim() !== "" ? value : "";
+        // Update only the index that changed
+        updatedPostCodes[index] = value;
 
         dispatch(updateFormData({ postCode_cover: updatedPostCodes }));
         return;
     }
 
-
-    // Ensure fee updates correctly
     if (name === "fee") {
-      dispatch(updateFormData({ fee: value }));  
-      return;
+        dispatch(updateFormData({ fee: value }));
+        return;
     }
 
     dispatch(updateFormData({ [name]: value }));
 };
+React.useEffect(() => {
+  if (!agentDetails.postCode_cover) {
+    dispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload: {
+        ...agentDetails,
+        postCode_cover: [''] // Initialize with one empty postcode
+      }
+    });
+  }
+}, [agentDetails, dispatch]);
+
+// Function to add a new postcode field (up to 4)
+const addPostcode = () => {
+  if (postcodes.length < 4) {
+    setPostcodes([...postcodes, ""]); // Add a new empty field
+  }
+};
+// Function to update a specific postcode value
+const updatePostcode = (index, value) => {
+  if (agentDetails.postCode_cover) {
+    const updatedPostcodes = [...agentDetails.postCode_cover];
+    updatedPostcodes[index] = value;
+    dispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload: {
+        ...agentDetails,
+        postCode_cover: updatedPostcodes
+      }
+    });
+  }
+};
+
+// Function to remove a postcode field
+const removePostcode = (index) => {
+  if (agentDetails.postCode_cover) {
+    const updatedPostcodes = agentDetails.postCode_cover.filter((_, i) => i !== index);
+    dispatch({
+      type: 'UPDATE_FORM_DATA',
+      payload: {
+        ...agentDetails,
+        postCode_cover: updatedPostcodes
+      }
+    });
+  }
+};
+
+// Guard against agentDetails.postCode_cover being undefined
+
+
 
   
   
   const handleIncrease = () => {
-    dispatch(updateFormData({ sales_team_count: sales_team_count + 1 }));
+    dispatch(updateFormData({ sales_team_count: (sales_team_count || 1) + 1 }));
   };
 
   const handleDecrease = () => {
@@ -174,9 +259,18 @@ const StepThree = ({ errors = {}, setErrors }) => {
       dispatch(updateFormData({ sales_team_count: sales_team_count - 1 }));
     }
   };
+  const handlePostcodeChange = (index, value) => {
+    if (/^\d*$/.test(value)) { // Allow only numbers
+      const newPostcodes = [...postcodes];
+      newPostcodes[index] = value;
+      setPostcodes(newPostcodes);
+    }
+  };
 
   return (
     <div>
+      
+      
       {/* Services Provided */}
       <label className="block text-gray-700 font-semibold mt-4 text-left">
         Full Range of Services You Provide
@@ -185,7 +279,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="services_provided"
         value={formData.services_provided || ""}
         onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Service</option>
         {loading.services ? (
@@ -210,7 +304,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="method_of_sale"
         value={formData.method_of_sale || ""}
         onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Sales Method</option>
         {loading.salesMethods ? (
@@ -235,7 +329,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="buyer_agency_agreement"
         value={formData.buyer_agency_agreement || ""}
         onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Duration</option>
         {loading.durations ? (
@@ -262,8 +356,8 @@ const StepThree = ({ errors = {}, setErrors }) => {
         </button>
         <input
           type="sales_team_count"
-          className="w-full p-2 border rounded-lg text-center bg-white text-black border-indigo-600"
-          value={sales_team_count}
+          className="w-full p-2 border rounded-lg text-center bg-white text-black border-gray-700"
+          value={sales_team_count || 1}
           readOnly
         />
         <button className="p-2 bg-gray-200 rounded-lg" onClick={handleIncrease}>
@@ -271,26 +365,35 @@ const StepThree = ({ errors = {}, setErrors }) => {
         </button>
       </div>
 
-      {/* Postcodes */}
-<label className="block text-gray-700 mt-4 text-left">
-  Which Postcodes Do You Cover?
-</label>
-<div className="grid grid-cols-2 gap-2 mt-2">
-  {formData.postCode_cover.map((postCode_cover, index) => (
-  <input
-    key={index}
-    type="text"
-    className="w-full p-2 border rounded-lg bg-white text-black border-indigo-600"
-    placeholder={`Postcode ${index + 1}`}
-    value={postCode_cover}
-    onChange={handleChange}
-    data-index={index}   // Pass index
-    name="postCode_cover"     // Name should be "postcodes"
-  />
-))}
+       {/* Postcode Input Fields */}
+       {postcodes.map((postcode, index) => (
+        <input
+          key={index}
+          type="text"
+          value={postcode}
+          onChange={(e) => handlePostcodeChange(index, e.target.value)}
+          className="block mt-2 p-2 border rounded w-full"
+          placeholder={`Enter postcode ${index + 1}`}
+        />
+      ))}
 
-</div>
-{errors.postCode_cover && <p className="text-red-500">{errors.postCode_cover}</p>}
+      {/* Add Postcode Button */}
+      {postcodes.length < 4 && (
+        <button
+          type="button"
+          onClick={addPostcode}
+          className="mt-2 bg-blue-500 text-white px-3 py-1 rounded"
+        >
+          Add Postcode
+        </button>
+      )}
+
+      {/* Display count */}
+      <div className="mt-2 text-sm text-gray-600">
+        Postcodes added: {postcodes.length}/4
+      </div>
+    
+
 
 
       {/* Areas of Specialization */}
@@ -299,30 +402,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="specialization"
         value={formData.specialization || ""}
         onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
-      >
-        <option value="">Select Specialization</option>
-        {loading.specialize ? (
-          <option disabled>Loading specializations...</option>
-        ) : specializeOptions.length > 0 ? (
-          specializeOptions.map((specialize, index) => (
-            <option key={index} value={specialize}>
-              {specialize}
-            </option>
-          ))
-        ) : (
-          <option disabled>No specializations available</option>
-        )}
-      </select>
-      {errors.specialization && <p className="text-red-500">{errors.specialization}</p>}
-
-      {/* Types of Clients */}
-      <label className="block text-gray-700 mt-4 text-left">Types of Clients You Typically Work With</label>
-      <select
-        name="agent_work_type"
-        value={formData.agent_work_type || ""}
-        onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Type</option>
         {loading.type ? (
@@ -345,7 +425,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="videoCall_offer"
         value={formData.videoCall_offer || ""}
         onChange={handleChange}
-        className="w-full p-2 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-2 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Option</option>
         <option>Yes</option>
@@ -359,7 +439,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="videoCallTech"
         value={formData.videoCallTech || ""}
         onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Video Call Technology</option>
         {loading.videoCalltech ? (
@@ -382,7 +462,7 @@ const StepThree = ({ errors = {}, setErrors }) => {
         name="digital_solution"
         value={formData.digital_solution || ""}
         onChange={handleChange}
-        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
+        className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
       >
         <option value="">Select Digital Technology</option>
         {loading.digitalTech ? (
@@ -400,35 +480,33 @@ const StepThree = ({ errors = {}, setErrors }) => {
       {errors.digital_solution && <p className="text-red-500">{errors.digital_solution}</p>}
 
       {/* Fee Structure */}
-      {/* Fees Structure */}
-<label className="block text-gray-700 font-semibold mt-4 text-left">
-  Fee Structure (Min - Max)
-</label>
-<div className="flex gap-2 mt-2">
-  <input
-    type="number"
-    name="min"
-    value={formData.fees_structure?.min || ""}
-    onChange={(e) => handleChange(e, "fees_structure")}
-    className="w-full p-2 border rounded-lg bg-white text-black border-indigo-600"
-    placeholder="Min Fee"
-  />
-  <input
-    type="number"
-    name="max"
-    value={formData.fees_structure?.max || ""}
-    onChange={(e) => handleChange(e, "fees_structure")}
-    className="w-full p-2 border rounded-lg bg-white text-black border-indigo-600"
-    placeholder="Max Fee"
-  />
-</div>
-{errors.fees_structure && <p className="text-red-500">{errors.fees_structure}</p>}
-
+      <label className="block text-gray-700 font-semibold mt-4 text-left">
+        Fee Structure (Min - Max)
+      </label>
+      <div className="flex gap-2 mt-2">
+        <input
+          type="number"
+          name="min"
+          value={formData.fees_structure?.min || ""}
+          onChange={(e) => handleChange(e, "fees_structure")}
+          className="w-full p-2 border rounded-lg bg-white text-black border-gray-700"
+          placeholder="Min Fee"
+        />
+        <input
+          type="number"
+          name="max"
+          value={formData.fees_structure?.max || ""}
+          onChange={(e) => handleChange(e, "fees_structure")}
+          className="w-full p-2 border rounded-lg bg-white text-black border-gray-700"
+          placeholder="Max Fee"
+        />
+      </div>
+      {errors.fees_structure && <p className="text-red-500">{errors.fees_structure}</p>}
 
       <label className="block text-gray-700 mt-4 text-left">I Charge a</label>
       <div className="flex gap-2 mt-2">
         <select
-          className="w-1/2 p-2 border rounded-lg bg-white text-black border-indigo-600"
+          className="w-1/2 p-2 border rounded-lg bg-white text-black border-gray-700"
           name="chargeType"
           value={formData.chargeType || ""}
           onChange={handleChange}
@@ -438,14 +516,13 @@ const StepThree = ({ errors = {}, setErrors }) => {
           <option>Fixed Fee</option>
         </select>
         <input
-           type="text"
-           name="fee"
-           value={formData?.fee || ""}
-           onChange={handleChange}
-           className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-indigo-600"
-           placeholder="Enter fee..."
-         />
-      
+          type="text"
+          name="fee"
+          value={formData.fee || ""}
+          onChange={handleChange}
+          className="w-full p-3 border rounded-lg mt-2 bg-white text-black border-gray-700"
+          placeholder="Enter fee..."
+        />
       </div>
       {errors.chargeType && <p className="text-red-500">{errors.chargeType}</p>}
     </div>

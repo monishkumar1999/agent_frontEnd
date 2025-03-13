@@ -74,7 +74,9 @@ const AgentProfile = () => {
                             <FaEdit className="text-lg" />
                         </Link>
                         
+                        
                     </div>
+                    
 
                     <div className="ml-4">
                         <h3 className="text-2xl font-semibold text-yellow-400">{agent.firstName} {agent.lastName}</h3>
@@ -99,7 +101,14 @@ const AgentProfile = () => {
                     <span className={`px-3 py-1 rounded-full text-sm font-semibold ${agent.is_approval === "1" ? "bg-blue-600 text-white" : "bg-yellow-500 text -gray-900"}`}>
                         {agent.is_approval === "1" ? "Approved" : "Pending Approval"}
                     </span>
+                    <Link 
+        to="/agents/form"
+        className="px-3 py-1 rounded-full text-sm font-semibold bg-blue-600 text-white"
+    >
+        Edit Profile
+    </Link>
                 </div>
+                
 
                 {/* Date of Joining */}
                 <p className="text-gray-300 text-sm mt-2">
