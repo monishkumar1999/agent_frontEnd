@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         playwrite: ["Playwrite IT Moderna", "sans-serif"],
+        athiban: ["Big Shoulders Stencil", "Space Mono"],
       },
       colors: {
         "base-white": "#fff",

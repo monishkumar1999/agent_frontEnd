@@ -14,6 +14,8 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import { IMGURL, NOPROFILE } from "../../../utils/imgpath";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const IconBox = ({ icon, bgColor }) => (
   <div
@@ -24,10 +26,12 @@ const IconBox = ({ icon, bgColor }) => (
 );
 
 const AgentProfile = () => {
-  const { agentId } = useParams();
+  const { agentId, proposalId } = useParams();
   const [agent, setAgent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [confirmRequest, setConfirmRequest] = useState(false);
+  const [loadingRequest, setLoadingRequest] = useState(false);
 
   useEffect(() => {
     const fetchAgentDetails = async () => {
@@ -48,6 +52,33 @@ const AgentProfile = () => {
     }
   }, [agentId]);
 
+  const handleRequest = async () => {
+    setLoadingRequest(true);
+    setConfirmRequest(false);
+
+    setTimeout(async () => {
+      try {
+        const response = await axiosInstance.post("/user/proposal-requests", {
+          agentId,
+          proposalId: proposalId,
+        });
+        setLoadingRequest(false);
+
+        if (response.data?.success) {
+          toast.success("Request sent successfully!", {
+            position: "top-center",
+          });
+        } else {
+          toast.error(response.data?.message || "Failed to send request.");
+        }
+      } catch (err) {
+        console.error("Error sending request:", err);
+        toast.error("Something went wrong. Try again.");
+        setLoadingRequest(false);
+      }
+    }, 2000);
+  };
+
   if (loading)
     return (
       <div className="flex items-center justify-center min-h-screen text-gray-600 font-semibold text-lg">
@@ -63,6 +94,7 @@ const AgentProfile = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen p-6 flex justify-center">
+      <ToastContainer />
       <div className="max-w-6xl w-full flex flex-col md:flex-row gap-6">
         {/* Profile Card */}
         <div className="bg-white shadow-lg hover:shadow-2xl rounded-xl p-6 flex flex-col items-center w-full md:w-1/3 font-sans">
@@ -77,10 +109,37 @@ const AgentProfile = () => {
               {agent.averageRating || "No Rating"}
             </p>
           </div>
-          <button className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg shadow-md mt-4 font-medium">
-            Request
+          <button
+            onClick={() => setConfirmRequest(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-6 rounded-lg shadow-md mt-4 font-medium"
+            disabled={loadingRequest}
+          >
+            {loadingRequest ? "⏳ Requesting..." : "Request"}
           </button>
         </div>
+        {confirmRequest && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+              <p className="mb-4">
+                Are you sure you want to send a request to this agent?
+              </p>
+              <div className="flex justify-center gap-4">
+                <button
+                  onClick={handleRequest}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setConfirmRequest(false)}
+                  className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Left Side Content (Agency Information & Additional Details) */}
         <div className="w-full md:w-2/3 flex flex-col gap-6 font-sans">
@@ -96,7 +155,7 @@ const AgentProfile = () => {
 
           {/* Agency Information */}
           <div>
-            <h3 className="text-xl font-bold text-gray-800 border-b pb-2 mb-4">
+            <h3 className="text-xl font-bold  text-gray-800 border-b pb-2 mb-4">
               Agency Information
             </h3>
             <p className="text-gray-700 text-sm mb-4">

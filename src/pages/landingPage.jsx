@@ -23,6 +23,9 @@ const LandingPage = () => {
       {/* Header */}
       <HeaderComponent />
 
+      <p className="font-playwrite text-lg">This uses Playwrite IT Moderna</p>
+      <p className="font-athiban text-lg">This uses Big Shoulders Stencil</p>
+
       {/* Hero Section */}
       <div className="px-4 sm:px-6 lg:px-8">
         <HeroBanner scrollToAgents={scrollToAgents} />

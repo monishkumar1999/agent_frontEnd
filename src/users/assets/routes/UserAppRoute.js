@@ -77,7 +77,7 @@ const UserAppRoutes = () => {
         />
 
         <Route
-          path="/agent/:agentId"
+          path="/agent/:agentId/:proposalId"
           element={
             <Layout>
               <AgentProfile />
