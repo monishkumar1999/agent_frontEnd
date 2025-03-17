@@ -49,10 +49,10 @@ const AgentBenefits = ({ className = "" }) => {
       <div className="flex-1 flex flex-col items-center justify-start gap-[60px] max-w-full mq800:gap-[30px]">
         {/* Header Section */}
         <div className="w-[632px] flex flex-col items-center justify-center px-[39px] gap-[15px] max-w-full">
-          <h1 className="font-thiban font-bold text-yellow-500 text-2xl w-screen">
+          <h1 className="font-athiban font-bold text-yellow-500 text-2xl w-screen">
             Your Perfect Agent is Just a Click Away
           </h1>
-          <p className="">
+          <p className="font-athiban">
             Your one-stop platform for finding the right agent, tailored to your
             needs.
           </p>
