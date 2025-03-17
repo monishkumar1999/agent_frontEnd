@@ -37,10 +37,10 @@ const HeroBanner = ({ scrollToAgents }) => {
     //   </div>
     // </div>
     <div className="min-h-screen flex items-center justify-center bg-white px-6 lg:px-20">
-      <div className="max-w-7xl w-full flex flex-col :flex-row items-center justify-between relative">
+      <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center justify-between relative">
         
         {/* Left Section */}
-        <div className="lg:w-1/2 text-center lg:text-left ">
+        <div className="lg:w-1/2 text-center md:text-left ">
           <h1 className="text-4xl lg:text-4xl  font-athiban font-bold leading-tight text-gray-900 absolute top-2">
           Buyer Agents Work for YOU, <br />
           Not the Seller,<br />           
