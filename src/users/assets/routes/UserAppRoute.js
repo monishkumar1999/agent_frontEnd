@@ -11,6 +11,8 @@ import LoginPage from "../../../pages/LoginPage"; // ✅ Use LoginPage instead o
 import UserAppRouteWrapper from "./UserAppRouteWrapper"; // ✅ Protects user routes
 import Proposal from "../component/Proposal";
 import AgentProfile from "../component/AgentProfile";
+import Requests from "../component/Requests";
+import ProposalsList from "../component/ProposalsList";
 
 const UserAppRoutes = () => {
   return (
@@ -81,6 +83,22 @@ const UserAppRoutes = () => {
           element={
             <Layout>
               <AgentProfile />
+            </Layout>
+          }
+        />
+        <Route
+          path="requests"
+          element={
+            <Layout>
+              <Requests />
+            </Layout>
+          }
+        />
+        <Route
+          path="proposalslist"
+          element={
+            <Layout>
+              <ProposalsList />
             </Layout>
           }
         />

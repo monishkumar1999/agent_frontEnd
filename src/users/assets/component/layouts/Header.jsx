@@ -14,7 +14,7 @@ import { User, MessageCircle } from "lucide-react";
 const navigation = [
   { name: "Home", href: "/", current: false },
   { name: "Find Agent", href: "/user/details", current: false },
-  { name: "Your Proposal", href: "/user/proposal", current: false },
+  { name: "Your Proposal", href: "/user/proposalslist", current: false },
   { name: "Your Requests", href: "/user/requests", current: false },
 ];
 
