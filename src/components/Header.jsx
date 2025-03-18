@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"; // ✅ Correct import
 import { Link } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance";
 
 const HeaderComponent = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,21 +41,20 @@ const HeaderComponent = () => {
         Become An Agent
       </a> */}
 
-      {/* <GoogleLogin
-        onSuccess={ async  (credentialResponse) => {
+      <GoogleLogin
+        onSuccess={async (credentialResponse) => {
           const decoded = jwtDecode(credentialResponse.credential); // ✅ Use named import
           const email = decoded.email;
           console.log("📧 User Email:", email);
 
-         await axiosInstance.post('agent/google-login',{email})
-         
+          await axiosInstance.post("agent/google-login", { email });
         }}
         onError={() => {
           console.log("❌ Login Failed");
         }}
         useOneTap
         ux_mode="popup"
-      /> */}
+      />
       {/* Right Section */}
       <div className="ml-auto flex items-center space-x-4">
         <a

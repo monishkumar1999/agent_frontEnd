@@ -19,7 +19,7 @@ const ProposalsList = () => {
   useEffect(() => {
     const fetchProposals = async () => {
       try {
-        const response = await axiosInstance.post("/user/get-proposals"); // API to get user's proposals
+        const response = await axiosInstance.post("/user/get-proposals");
 
         if (response.status !== 200) {
           throw new Error("Failed to fetch proposals");
@@ -56,7 +56,7 @@ const ProposalsList = () => {
           {proposals.map((proposal) => (
             <div
               key={proposal._id}
-              className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition duration-300"
+              className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg p-6 border border-gray-200 hover:shadow-2xl transition-transform transform hover:-translate-y-1 duration-300"
             >
               <div className="mb-4 flex items-center gap-2">
                 <FaMapMarkerAlt className="text-violet-600" />
@@ -122,7 +122,7 @@ const ProposalsList = () => {
 
               <button
                 onClick={() => navigate(`/user/proposal/${proposal._id}`)}
-                className="w-full mt-4 px-4 py-2 bg-violet-600 text-white rounded-xl font-medium hover:bg-violet-700 transition"
+                className="w-full mt-4 px-4 py-2 bg-violet-600 text-white rounded-xl font-medium hover:bg-violet-700 transition-all duration-300"
               >
                 View Proposal
               </button>
