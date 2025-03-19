@@ -27,6 +27,7 @@
     "react-id-swiper": "^4.0.0",
     "react-modal": "^3.16.3",
     "react-otp-input": "^3.1.1",
+    "react-parallax-tilt": "^1.7.286",
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",

@@ -40,13 +40,13 @@ const HeroBanner = ({ scrollToAgents }) => {
       <div className="max-w-7xl w-full flex flex-col lg:flex-row items-center justify-between relative">
         
         {/* Left Section */}
-        <div className="lg:w-1/2 text-center lg:text-left ">
-          <h1 className="text-4xl lg:text-4xl  font-athiban font-bold leading-tight text-gray-900 absolute top-2">
+        <div className="lg:w-1/2 text-center lg:text-left">
+         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-athiban font-bold leading-tight text-gray-900">
           Buyer Agents Work for YOU, <br />
           Not the Seller,<br />           
           </h1>
           
-          <p className="mt-4 text-md font-athiban text-gray-600">
+          <p className="mt-4 text-lg font-athiban text-gray-600">
           Your Interests Come First!<br />
           Your one-stop platform for finding the right agent,
           tailored to your needs.
