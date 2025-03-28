@@ -3,7 +3,7 @@ import AgentBenefits from "../components/AgentBenefits";
 import HowItWorks from "../components/HowItWorks";
 import TopRatedAgents from "../components/TopRatedAgents";
 import Vetting from "../components/Vetting";
-import Agents from "../components/Agents";
+
 import Footer from "../components/Footer";
 import HeaderComponent from "../components/Header";
 import HeroBanner from "../components/HeroBanner";
@@ -22,6 +22,8 @@ const LandingPage = () => {
     <>
       {/* Header */}
       <HeaderComponent />
+
+   
 
       {/* Hero Section */}
       <div className="px-4 sm:px-6 lg:px-8">
@@ -46,7 +48,7 @@ const LandingPage = () => {
 
       {/* Top Rated Agents Section */}
       <div className="py-12 sm:py-16 lg:py-20">
-        <SwipperCard/>
+        <SwipperCard />
         {/* <TopRatedAgents /> */}
       </div>
 
@@ -61,9 +63,9 @@ const LandingPage = () => {
       </div>
 
       {/* Agents Section */}
-      <div ref={agentsRef} className="py-12 sm:py-16 lg:py-20">
+      {/* <div ref={agentsRef} className="py-12 sm:py-16 lg:py-20">
         <Agents />
-      </div>
+      </div> */}
 
       {/* Footer */}
       <Footer

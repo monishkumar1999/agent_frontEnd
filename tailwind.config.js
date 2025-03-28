@@ -7,6 +7,7 @@ module.exports = {
         playwrite: ["Playwrite IT Moderna", "sans-serif"],
         jerom:["Emblema One"],
         athiban:["Noto Serif"],
+        athiban: ["Big Shoulders Stencil", "Space Mono"],
       },
       colors: {
         "base-white": "#fff",
