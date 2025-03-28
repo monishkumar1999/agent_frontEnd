@@ -52,7 +52,7 @@ const HeroBanner = ({ scrollToAgents }) => {
           tailored to your needs.
           </p>
             <div className="mt-6 flex justify-center lg:justify-start space-x-4">
-            <button className= "bg-blueviolet text-white px-6 py-3 rounded-lg text-lg font-semibold shadow-lg 800 transition">
+            <button className= "bg-gradient-to-r from-blue-500 to-pink-500 text-white font-semibold py-2 px-6 rounded-xl shadow-md hover:opacity-80 transition">
              FindMY Agent
             </button>
             </div>

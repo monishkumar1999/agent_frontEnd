@@ -33,33 +33,33 @@ const Footer = ({
 
         {/* Categories, Reviews, Listings, Contact Us */}
         <div className="flex flex-col items-start justify-start gap-[12px] min-w-[120px] text-left">
-          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="self-stretch relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             Categories
           </div>
-          <div className="relative tracking-[0.01em] font-medium text-xs text-left mq450:text-xs">
+          <div className="relative tracking-[0.01em] font-athiban font-medium text-xs text-left mq450:text-xs">
             Reviews
           </div>
-          <div className="relative tracking-[0.01em] font-medium text-xs text-left inline-block min-w-[60px] mq450:text-xs">
+          <div className="relative tracking-[0.01em] font-athiban font-medium text-xs text-left inline-block min-w-[60px] mq450:text-xs">
             Listings
           </div>
-          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs inline-block min-w-[80px] mq450:text-xs">
+          <div className="self-stretch relative tracking-[0.01em] font-athiban font-medium text-xs inline-block min-w-[80px] mq450:text-xs">
             Contact Us
           </div>
         </div>
 
         {/* About Us, Awards, Useful Sites, Privacy Policy */}
         <div className="flex flex-col items-start justify-start gap-[12px] min-w-[120px] text-left">
-          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="self-stretch relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             About Us
           </div>
-          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="self-stretch relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             Awards
           </div>
-          <div className="self-stretch relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="self-stretch relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             Useful Sites
           </div>
           <a
-            className="[text-decoration:none] relative tracking-[0.12px] font-medium text-[inherit] mq450:text-xs"
+            className="[text-decoration:none] relative tracking-[0.12px] font-athiban font-medium text-[inherit] mq450:text-xs"
             style={privacyPolicyStyle}
           >
             Privacy Policy
@@ -68,13 +68,13 @@ const Footer = ({
 
         {/* Contact details */}
         <div className="flex-1 flex flex-col items-start justify-start gap-[12px] min-w-[180px] max-w-full text-left">
-          <div className="relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             27th Street of New Town, Digital Villa
           </div>
-          <div className="relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             010-020-0340
           </div>
-          <div className="relative tracking-[0.01em] font-medium text-xs mq450:text-xs">
+          <div className="relative tracking-[0.01em] font-athiban font-medium text-xs mq450:text-xs">
             090-080-0760
           </div>
         </div>
@@ -82,7 +82,7 @@ const Footer = ({
 
       {/* Footer copyright */}
       <div className="w-full flex justify-center items-center z-[1]">
-        <p className="tracking-[0.01em] text-xs text-center">
+        <p className="tracking-[0.01em] font-athiban text-xs text-center">
           Copyright © 2024 FindMyAgent., Ltd. All Rights Reserved. FindMyAgent
         </p>
       </div>

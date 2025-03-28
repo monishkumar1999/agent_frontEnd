@@ -25,8 +25,8 @@ code {
 }
 
 .swiper {
-  width: 180px;  /* ✅ Reduced width */
-  height: 220px; /* ✅ Reduced height */
+  width: 320px;  /* ✅ Reduced width */
+  height: 360px; /* ✅ Reduced height */
   padding: 30px 0;
 }
 

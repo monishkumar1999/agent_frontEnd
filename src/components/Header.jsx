@@ -59,12 +59,12 @@ const HeaderComponent = () => {
       <div className="ml-auto flex items-center space-x-4">
         <a
           href="/HowItWorks"
-          className="bg-[#8046F1] text-white hover:bg-purple-700 rounded-full px-4 py-2 font-instrument-sans transition-colors duration-200"
+          className="bg-gradient-to-r from-blue-500 to-pink-500 text-white font-semibold py-2 px-6 rounded-xl shadow-md hover:opacity-80 transition"
         >
           Become An Agent
         </a>
         <Link to="/user/login">
-          <button className="bg-[#8046F1] text-white hover:bg-purple-700 rounded-full px-4 py-2 font-instrument-sans transition-colors duration-200">
+          <button className="bg-gradient-to-r from-blue-500 to-pink-500 text-white font-semibold py-2 px-6 rounded-xl shadow-md hover:opacity-80 transition">
             User
           </button>
         </Link>
