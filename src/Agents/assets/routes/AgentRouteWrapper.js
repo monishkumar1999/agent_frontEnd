@@ -37,8 +37,4 @@ const AgentRouteWrapper = () => {
     return <Outlet />;
 };
 
-<<<<<<< HEAD
 export default AgentRouteWrapper;
-=======
-export default AgentRouteWrapper;
->>>>>>> 3c1ac80b35c8c3670e0e3727fef94f4ad94aa32a
