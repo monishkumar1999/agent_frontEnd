@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Send } from "lucide-react";
-import { createSocketConnection } from "../../../../utils/socket";
-import { getUserIdFromCookies } from "../../../../utils/auth";
-import { NOPROFILE } from "../../../../utils/imgpath";
-import axiosInstance from "../../../../utils/axiosInstance";
-import ChatWindow from "./ChatWindow";
+import { createSocketConnection } from "../../../../../utils/socket";
+import { getUserIdFromCookies } from "../../../../../utils/auth";
+import { NOPROFILE } from "../../../../../utils/imgpath";
+import axiosInstance from "../../../../../utils/axiosInstance";
+import ChatWindow from "../adminchat/ChatWindow";
 
 
-const AgentChatbox = () => {
+const AdminChatbox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const socketRef = useRef(null);
@@ -120,4 +120,4 @@ const AgentChatbox = () => {
   );
 };
 
-export default AgentChatbox;
+export default AdminChatbox;

@@ -10,7 +10,9 @@ const Contact = lazy(() => import("../component/Contact"));
 const Services = lazy(() => import("../component/Services"));
 const AgentDashboard = lazy(() => import("../component/AgentDashboard"));
 const AgentProfile = lazy(() => import("../component/AgentProfile"));
-const AgentChatbox = lazy(() => import("../component/chating/AgentChatbox"));
+const AgentChatPage = lazy(() => import("../component/chating/userchat/AgentChatPage"));
+const AgentChatbox =lazy(()=> import("../component/chating/adminchat/AdminChatbox"))
+const Userchat =lazy(()=> import("../component/chating/userchat/Userchat"))
 
 const AgentRoutes = () => {
   return (

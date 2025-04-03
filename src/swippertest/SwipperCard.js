@@ -21,8 +21,8 @@ const SwipperCard = ({ className = "" }) => {
 
   return (
     <section className={`relative flex flex-col items-center pb-20 w-full text-gray-900 ${className}`}>
-      <h1 className="text-4xl font-athiban font-semibold text-gray-800 text-center mb-8">
-        Meet Our <span className="font-athiban text-blue-600">Top-Rated Agents</span>
+      <h1 className="text-4xl  font-semibold text-gray-800 text-center mb-8">
+        Meet Our <span className=" text-blue-600">Top-Rated Agents</span>
       </h1>
 
       {/* Main Container (Centered) */}
@@ -59,15 +59,15 @@ const SwipperCard = ({ className = "" }) => {
 
         {/* Right Side - Agent Details (Perfectly Aligned) */}
         <div className="flex-1 p-8 border border-gray-300 rounded-lg shadow-lg max-w-lg text-center md:text-left">
-          <h2 className="text-3xl font-athiban font-bold text-gray-900">{img[selectedAgentIndex].name}</h2>
-          <p className="text-lg font-athiban text-gray-700 mt-2 font-semibold">{img[selectedAgentIndex].jobrole}</p>
-          <p className="text-md font-athiban font-medium text-gray-500 mt-1">{img[selectedAgentIndex].location}</p>
+          <h2 className="text-3xl  font-bold text-gray-900">{img[selectedAgentIndex].name}</h2>
+          <p className="text-lg  text-gray-700 mt-2 font-semibold">{img[selectedAgentIndex].jobrole}</p>
+          <p className="text-md  font-medium text-gray-500 mt-1">{img[selectedAgentIndex].location}</p>
 
           <span className="mt-5 px-5 py-2 bg-blue-600 text-white text-md rounded-md inline-block shadow-md">
             ⭐ {img[selectedAgentIndex].rating}
           </span>
 
-          <p className="mt-6 font-athiban text-gray-700 text-lg leading-relaxed">
+          <p className="mt-6  text-gray-700 text-lg leading-relaxed">
             {img[selectedAgentIndex].description}
           </p>
         </div>

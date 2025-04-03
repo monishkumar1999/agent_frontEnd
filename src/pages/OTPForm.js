@@ -1,91 +1,80 @@
 import React, { useState } from "react";
-import axios from "axios";
-import InputField from "../pages/InputField"; // Adjust the path if necessary
-import toast from "react-hot-toast"
-import axiosInstance from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axiosInstance from "../utils/axiosInstance";
 
-
-
-function OTPForm({ onVerify, email }) {
-  const [otpInput, setOtpInput] = useState("");
+const OTPForm = ({ onVerify, email }) => {
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [otpError, setOtpError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
-
-  const handleOtpChange = (e) => {
-    setOtpInput(e.target.value);
+  const handleChange = (index, value) => {
+    if (!/^[0-9]?$/.test(value)) return;
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+    
+    if (value && index < 5) {
+      document.getElementById(`otp-${index + 1}`).focus();
+    }
   };
 
-  const handleOtpSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setOtpError("");
 
-    if (!otpInput) {
-      setOtpError("Please enter the OTP.");
+    const otpValue = otp.join("");
+    if (otpValue.length < 6) {
+      setOtpError("Please enter the complete OTP.");
       setIsLoading(false);
       return;
     }
 
     try {
-      const otpData = { email, otp: otpInput };
-      
-      // Ensure correct API URL (double-check if `/api/agent/verify-otp` is the correct path)
-      const response = await axiosInstance.post(`/agent/verify-otp`, otpData);
-
-      console.log("OTP Verification Response:", response.data);
+      const response = await axiosInstance.post(`/agent/verify-otp`, { email, otp: otpValue });
       toast.success(response.data.message);
-      
-      navigate("/agents"); // Redirect to Agent Home Page
-      setTimeout(() => {
-        navigate("/agents");
-      }, 2000);
-
-
-       
+      setTimeout(() => navigate("/agents"), 2000);
     } catch (error) {
-  
-      if (error.response) {
-      
-        setOtpError(error.response.data.message || "Invalid OTP. Please try again.");
-        toast.error(error.response.data.message || "Invalid OTP.");
-      } else {
-        setOtpError("Something went wrong. Please try again later.");
-        toast.error("Server Error.");
-      }
+      const errorMsg = error.response?.data?.message || "Invalid OTP. Please try again.";
+      setOtpError(errorMsg);
+      toast.error(errorMsg);
     }
-
     setIsLoading(false);
   };
 
   const maskedEmail = email.replace(/(.{2})(.*)(@.*)/, "$1****$3");
 
   return (
-    <form onSubmit={handleOtpSubmit} className="space-y-4">
-      <h3 className="text-xl md:text-2xl font-semibold text-center">OTP Verification</h3>
-      <p className="text-center">An OTP has been sent to {maskedEmail}. Please enter it below.</p>
-      
-      <InputField
-        label="OTP"
-        type="text"
-        name="otp"
-        value={otpInput}
-        onChange={handleOtpChange}
-        error={otpError}
-      />
-
-      <button
-        type="submit"
-        className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg"
-        disabled={isLoading}
-      >
-        {isLoading ? "Verifying..." : "Verify OTP"}
-      </button>
-    </form>
+    <div className="max-w-sm mx-auto p-6 bg-gray-100 shadow-lg rounded-xl">
+      <h3 className="text-2xl font-semibold text-center">OTP Verification</h3>
+      <p className="text-center text-gray-600">An OTP has been sent to <strong>{maskedEmail}</strong>. Please enter it below.</p>
+      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+        <div className="flex justify-center gap-2">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              id={`otp-${index}`}
+              type="text"
+              maxLength="1"
+              value={digit}
+              onChange={(e) => handleChange(index, e.target.value)}
+              className="w-12 h-12 text-xl text-center border rounded-lg focus:ring focus:ring-blue-300"
+            />
+          ))}
+        </div>
+        {otpError && <p className="text-red-500 text-center">{otpError}</p>}
+        <button
+          type="submit"
+          className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
+          disabled={isLoading}
+        >
+          {isLoading ? "Verifying..." : "Verify OTP"}
+        </button>
+      </form>
+    </div>
   );
-}
+};
 
 export default OTPForm;

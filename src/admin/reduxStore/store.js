@@ -1,13 +1,13 @@
 // src/reduxStore/store.js
-import { configureStore } from "@reduxjs/toolkit";
-import sidebarReducer from "./features/sidebarSlice";
-import authReducer from "./auth/authSlice";
-import detailsReducer from "./user/detailsSlice.js";
+import { configureStore } from '@reduxjs/toolkit';
+import sidebarReducer from './features/sidebarSlice';
+import formReducer from "./formSlice";
+import authReducer from './auth/authSlice';
 const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
     auth: authReducer,
-    details: detailsReducer,
+    form: formReducer,
   },
 });
 

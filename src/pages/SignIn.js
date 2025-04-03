@@ -49,7 +49,7 @@ function SignIn({ onLoginSuccess }) {
         onLoginSuccess(loginData.email);
 
         console.log(response);
-        toast.success(response.data.message);
+        toast.success(response.data.message) 
         // console.log("Login successful:", response.data);
       } catch (e) {
         console.log(e.response);

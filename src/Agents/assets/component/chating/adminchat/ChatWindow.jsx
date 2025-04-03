@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { NOPROFILE } from "../../../../utils/imgpath";
+import { NOPROFILE } from "../../../../../utils/imgpath";
 
 const ChatWindow = ({ messages, userId }) => {
   const chatEndRef = useRef(null);
