@@ -13,9 +13,12 @@ import axiosInstance from "../../../utils/axiosInstance";
 
 const DetailsForm = () => {
   const details = useSelector((state) => state.details);
+ 
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
+  
   const steps = [
     { id: "01", label: "About Property", component: PropertyStep, icon: Home },
     { id: "02", label: "Location", component: LocationStep, icon: MapPin },
@@ -33,7 +36,7 @@ const DetailsForm = () => {
     if (currentStep === 0) {
       if (
         !details.propertyType ||
-        !details.bedroomCount ||
+       
         !details.weeklyOrSaleValue
       ) {
         toast.error(
@@ -88,7 +91,7 @@ const DetailsForm = () => {
     if (validateCurrentStep()) {
       const backendFields = {
         propertyType: "propertyType",
-        bedroomCount: "noOfBedRooms",
+       
         weeklyOrSaleValue: "price_range",
         location: "location",
         pincode: "pincode",

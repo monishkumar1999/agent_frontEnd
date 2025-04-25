@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaSearch, FaShoppingCart, FaMoon, FaBell } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { MdLanguage } from "react-icons/md";
-import { Bell, User, MessageSquare, MessageCircle } from "lucide-react";
+import { Bell, User, MessageSquare, MessageCircle, UserPlus } from "lucide-react";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import axiosInstance from "../../../utils/axiosInstance"; // Import your axios instance
@@ -247,6 +247,24 @@ const handleImageChange = (newImage) => {
                         Admin Chat
                       </Link>
                       <p className="text-xs text-gray-600">Recent Chats</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
+                    <UserPlus className="w-6 h-6 text-gray-700" />
+                    <div>
+                      <Link to="/agents/request" className="text-sm font-bold text-gray-800 hover:text-violet-700 transition">
+                        Client Requests
+                      </Link>
+                      <p className="text-xs text-gray-600">See Requests</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
+                    <MessageCircle className="w-6 h-6 text-gray-700" />
+                    <div>
+                      <Link to="/agents/adminchat" className="text-sm font-bold text-gray-800 hover:text-violet-700 transition">
+                        Proposals
+                      </Link>
+                      <p className="text-xs text-gray-600">See Proposals</p>
                     </div>
                   </div>
 

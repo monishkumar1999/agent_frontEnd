@@ -6,11 +6,7 @@ import SignUp from "../pages/SignUp";
 import axiosInstance from "../utils/axiosInstance";
 
 function AgentForm() {
-  const userData = {
-    email: "dani@gmail.com",
-    password: "12312345", // Password should be a string
-  };
-
+ 
   const [isLogin, setIsLogin] = useState(true);
   const [otp, setOtp] = useState(null);
   const [showOtpForm, setShowOtpForm] = useState(false);

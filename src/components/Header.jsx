@@ -58,7 +58,7 @@ const HeaderComponent = () => {
       {/* Right Section */}
       <div className="ml-auto flex items-center space-x-4">
         <a
-          href="/HowItWorks"
+          href="/register"
           className="bg-gradient-to-r from-blue-500 to-pink-500 text-white font-semibold py-2 px-6 rounded-xl shadow-md hover:opacity-80 transition"
         >
           Become An Agent
