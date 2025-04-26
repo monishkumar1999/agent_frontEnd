@@ -12,7 +12,7 @@ function HowItWorks({ className = "", image }) {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
-        <h1 className="text-5xl font-bold mb-12">How does it work?</h1>
+        <h1 className="text-5xl font-athiban mb-12">How does it work?</h1>
         <div className="flex justify-between items-center w-full max-w-4xl mb-12 relative">
           <Step
             icon={<Search size={48} />}

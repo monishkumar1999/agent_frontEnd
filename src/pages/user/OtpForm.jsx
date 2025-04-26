@@ -37,7 +37,7 @@ const OTPForm = ({ email, onVerify }) => {
       console.log("OTP Verification Response:", response);
       toast.success(response.data.message);
       onVerify();
-      navigate("/user/home");
+      navigate("/user/success");
     } catch (e) {
       console.error("OTP Verification Error:", e.response);
       toast.error(e.response?.data?.message || "OTP verification failed");

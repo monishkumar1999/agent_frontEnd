@@ -12,7 +12,6 @@ const AdminChat = () => {
   const socketRef = useRef(null);
   const userId = getUserIdFromCookies();
   const targetId = "677b9e1e983e06021b031dc8"; // Example targetId for admin chat
-  const chatWindowRef = useRef(null);
 
   useEffect(() => {
     if (!userId || !targetId) return;
@@ -66,17 +65,10 @@ const AdminChat = () => {
     setInput(""); // Clear input field
   };
 
-  // Scroll to the bottom of the chat when a new message is received
-  useEffect(() => {
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
-    }
-  }, [messages]);
-
   return (
-    <div className="flex h-screen bg-gray-100">
-      {/* Admin Card on the Left Side */}
-      <div className="w-1/4 bg-white p-6 shadow-lg rounded-lg flex flex-col items-center">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
+      {/* Admin Sidebar */}
+      <div className="w-1/4 bg-white p-6 shadow-lg flex flex-col items-center">
         <div className="relative">
           <img
             src={NOPROFILE}
@@ -90,23 +82,19 @@ const AdminChat = () => {
         <p className="text-sm text-green-600 font-medium">Online</p>
       </div>
 
-      {/* Chat Window on the Right Side */}
-      <div className="flex-1 bg-gray-50 p-6 flex flex-col">
-        <h2 className="text-3xl font-semibold text-gray-700 mb-6">
+      {/* Chat Section */}
+      <div className="flex-1 flex flex-col bg-gray-50 p-6">
+        <h2 className="text-3xl font-semibold text-gray-700 mb-4">
           Admin Chat
         </h2>
 
-        {/* Chat Messages */}
-        <div
-          ref={chatWindowRef}
-          className="flex-grow bg-white p-5 mt-6 rounded-lg shadow-md overflow-y-auto"
-          style={{ maxHeight: "60vh" }}
-        >
+        {/* Chat Messages (Scrollable, Fixed Height) */}
+        <div className="flex-grow">
           <ChatWindow messages={messages} userId={userId} />
         </div>
 
         {/* Message Input */}
-        <div className="flex items-center mt-4 bg-white p-3 rounded-lg shadow-md">
+        <div className="flex items-center bg-white p-3 rounded-lg shadow-md mt-2">
           <input
             type="text"
             className="flex-grow p-3 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

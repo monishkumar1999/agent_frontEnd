@@ -1,31 +1,111 @@
-import React, { Suspense, lazy } from "react";
+// src/routes/UserAppRoutes.js
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Success from "../component/Success";
 import Layout from "../component/layouts/Layout";
-
+import Success from "../component/Success";
 import ChatPage from "../chating/ChatPage";
-import UserLay from "../component/UserLay";
+import Profile from "../component/Profile";
 import AdminChat from "../component/chating/AdminChat";
+import DetailsForm from "../component/DetailsForm";
+import LoginPage from "../../../pages/LoginPage"; // ✅ Use LoginPage instead of UserLogin
+import UserAppRouteWrapper from "./UserAppRouteWrapper"; // ✅ Protects user routes
+import Proposal from "../component/Proposal";
+import AgentProfile from "../component/AgentProfile";
+import Requests from "../component/Requests";
+import ProposalsList from "../component/ProposalsList";
 
 const UserAppRoutes = () => {
   return (
     <Routes>
-      <Route path="home" element={<Layout children={<Success />}></Layout>} />
-
+      {/* ✅ Prevent logged-in users from accessing /user/login (Checks Cookies) */}
       <Route
-        path="chat/:targetId"
-        element={<Layout children={<ChatPage />}></Layout>}
+        path="login"
+        element={
+          <Layout>
+            <LoginPage />
+          </Layout>
+        }
       />
 
-      <Route
-        path="userlay"
-        element={<Layout children={<UserLay />}></Layout>}
-      />
-      <Route
-        path="chats"
-        element={<Layout children={<AdminChat />}></Layout>}
-      />
+      {/* ✅ User routes wrapped in UserAppRouteWrapper */}
+      <Route element={<UserAppRouteWrapper />}>
+        <Route
+          path="success"
+          element={
+            <Layout>
+              <Success />
+            </Layout>
+          }
+        />
+        <Route
+          path="chat/:targetId"
+          element={
+            <Layout>
+              <ChatPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <Layout>
+              <Profile />
+            </Layout>
+          }
+        />
+        <Route
+          path="chats"
+          element={
+            <Layout>
+              <AdminChat />
+            </Layout>
+          }
+        />
+        <Route
+          path="details"
+          element={
+            <Layout>
+              <DetailsForm />
+            </Layout>
+          }
+        />
+        <Route
+          path="proposal/:id"
+          element={
+            <Layout>
+              <Proposal />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/agent/:agentId/:proposalId"
+          element={
+            <Layout>
+              <AgentProfile />
+            </Layout>
+          }
+        />
+        <Route
+          path="requests"
+          element={
+            <Layout>
+              <Requests />
+            </Layout>
+          }
+        />
+        <Route
+          path="proposalslist"
+          element={
+            <Layout>
+              <ProposalsList />
+            </Layout>
+          }
+        />
+      </Route>
+
+      {/* ✅ Redirect unknown user routes to profile */}
+      <Route path="*" element={<Navigate to="/user/profile" />} />
     </Routes>
   );
 };

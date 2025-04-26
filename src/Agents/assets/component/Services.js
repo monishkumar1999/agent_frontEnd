@@ -1,11 +1,11 @@
 import React from "react";
-import AgentNavbar from "./AgentNavbar";
+
 
 const Services = () => {
   return (
-    <div>
-        <AgentNavbar/>
-      <h1>Our Services</h1>
+    <div className="bg-white text-gray-900 p-6 rounded-lg shadow-md min-h-screen">
+        
+      <h1 className="text-2xl font-bold">Our Services</h1>
       <ul>
         <li>Property Listing</li>
         <li>Buyer-Agent Communication</li>

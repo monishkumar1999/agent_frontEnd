@@ -98,7 +98,7 @@ const BenefitCard = ({ icon, title, description, bgColor }) => (
       {/* Shine Effect */}
       <div className="absolute top-0 left-0 w-full h-full bg-white opacity-10 pointer-events-none"></div>
       {/* Image */}
-      <img className="w-full h-30 object-cover" loading="lazy" alt={title} src={icon} />
+      <img className="w-full h-25 object-cover" loading="lazy" alt={title} src={icon} />
       <h2 className="font-semibold text-white text-lg">{title}</h2>
       <p className="text-white opacity-90">{description}</p>
     </div>
@@ -112,25 +112,25 @@ BenefitCard.propTypes = {
   bgColor: PropTypes.string.isRequired,
 };
 
-const AgentBenefits = ({ className = "" }) => {
+const AgentBenefits = ({ className = "font-athiban" }) => {
   const benefits = [
     {
-      icon: "\images\c1.jpg",
+      icon: "/images/c2.jpg",
       title: "Tailored Agent Search",
       description: "Find expert buyer’s agents specialized in your needs and location.",
-      bgColor: "bg-gradient-to-r from-blue-500 to-indigo-600",
+      bgColor: "bg-blueviolet",
     },
     {
-      icon: "/images/mentoring.png",
+      icon: "/images/c1.jpg",
       title: "Negotiation & Closing Support",
       description: "Get expert guidance to secure the best deal and a smooth closing.",
-      bgColor: "bg-gradient-to-r from-green-500 to-teal-600",
+      bgColor: "bg-blueviolet",
     },
     {
-      icon: "/images/home09.png",
+      icon: "/images/c3.jpg",
       title: "Market Insights & Advice",
       description: "Receive up-to-date market trends and advice from agents to make informed decisions.",
-      bgColor: "bg-gradient-to-r from-purple-500 to-pink-600",
+      bgColor: "bg-blueviolet",
     },
   ];
 
@@ -138,10 +138,10 @@ const AgentBenefits = ({ className = "" }) => {
     <section className={`flex flex-col items-center justify-start gap-10 p-10 ${className}`}>
       {/* Header Section */}
       <div className="w-full text-center max-w-lg">
-        <h1 className="font-bold text-yellow-500 text-2xl">
+        <h1 className="font-athiban font-bold text-yellow-500 text-2xl">
           Your Perfect Agent is Just a Click Away
         </h1>
-        <p className="text-gray-700">Find the right agent tailored to your needs.</p>
+        <p className="font-athiban text-gray-700">Find the right agent tailored to your needs.</p>
       </div>
 
       {/* Benefits Section */}

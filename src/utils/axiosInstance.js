@@ -1,7 +1,6 @@
 import axios from "axios";
 import server from "../admin/assets/constant";
 
-
 const axiosInstance = axios.create({
   baseURL: server,
   withCredentials: true, // Ensures cookies (JWT) are sent
@@ -17,7 +16,7 @@ axiosInstance.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token"); // Remove stored JWT
       alert("Session expired. Redirecting to login.");
-      window.location.href = "/login"; // Redirect to login page
+      window.location.href = "/register"; // Redirect to login page
     }
 
     return Promise.reject(error);
