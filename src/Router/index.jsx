@@ -20,6 +20,7 @@ import Chat from "../components/Chat";
 import LoginPage from "../pages/LoginPage";
 import UserAppRoutes from "../users/assets/routes/UserAppRoute";
 import AgentRoutes from "../Agents/assets/routes/AgentRoutes";
+import ShowAgent from "../components/ShowAgent";
 
 export default function Router() {
 
@@ -39,6 +40,7 @@ export default function Router() {
         <Route path="/MultiStepForm" element={<MultiStepForm />} />
         <Route path="/register" element={<AgentForm />} />
         <Route path="/HowItWorks" element={<ExplaingPage />} />
+        <Route path="/showAgent" element={<ShowAgent />} />
         <Route
           path="/BuyerAgentDetailsPageInfo"
           element={<BuyerAgentDetailsPageInfo />}

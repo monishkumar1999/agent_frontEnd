@@ -2,7 +2,8 @@ import { jwtDecode } from "jwt-decode";
 
 export const getUserIdFromCookies = () => {
   const cookies = document.cookie.split("; ");
-  const authTokenCookie = cookies.find((row) => row.startsWith("auth_token="));
+  const authTokenCookie = cookies.find((row) => row.startsWith("authToken="));
+
 
 
 

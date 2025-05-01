@@ -41,7 +41,7 @@ const Login = () => {
      
       if (response.data.status === 'true') {
         setMessage("Login successful");
-        window.location.href = "http://localhost:3000/admin/dashboard"; 
+        window.location.href = "http://13.203.235.203/admin/dashboard"; 
       } else {
         setMessage(response.data.message || 'Login failed');
       }

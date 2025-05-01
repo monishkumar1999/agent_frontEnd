@@ -4,10 +4,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ["Cal Sans", "sans-serif"], // Default font
         playwrite: ["Playwrite IT Moderna", "sans-serif"],
-        jerom:["Emblema One"],
-        athiban:["Noto Serif"],
-        athiban: ["Big Shoulders Stencil", "Space Mono"],
+        emblema: ["Emblema One", "cursive"],
+        noto: ["Noto Serif", "serif"],
+        shoulders: ["Big Shoulders Stencil", "display"],
+        space: ["Space Mono", "monospace"],
+        mainfont:["Open Sans"," sans-serif"]
       },
       colors: {
         "base-white": "#fff",

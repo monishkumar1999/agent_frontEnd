@@ -15,7 +15,7 @@ const Role = () => {
 
     // Fetch existing roles on component mount or when token changes
     const fetchRoles = async () => {
-        if (!token) return;
+       
 
         setLoading(true);
         setError(null);

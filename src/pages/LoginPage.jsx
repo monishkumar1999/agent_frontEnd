@@ -14,6 +14,7 @@ const LoginPage = () => {
 
   const token = Cookies.get("authToken"); // ✅ Get token from cookies
 
+   
   // ✅ Redirect only if token exists AND user has role "user"
   useEffect(() => {
     if (token) {

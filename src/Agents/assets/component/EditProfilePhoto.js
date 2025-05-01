@@ -3,8 +3,9 @@ import axiosInstance from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IMGURL } from "../../../utils/imgpath";
 
-const NOPROFILE_BASE = "http://localhost:8000"; // Base URL for profile images
+const NOPROFILE_BASE = IMGURL; // Base URL for profile images
 
 const EditProfilePhoto = () => {
     const [image, setImage] = useState(null);

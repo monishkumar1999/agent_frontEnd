@@ -8,8 +8,9 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import axiosInstance from "../../../utils/axiosInstance"; // Import your axios instance
 import EditProfilePhoto from "../component/EditProfilePhoto";
+import { IMGURL } from "../../../utils/imgpath";
 
-const NOPROFILE_BASE = "http://localhost:8000"; // Base URL for profile images
+const NOPROFILE_BASE = IMGURL; // Base URL for profile images
 
 const Aheader = () => {
   const navigate = useNavigate();
@@ -109,11 +110,7 @@ const handleImageChange = (newImage) => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="/images/findmyagent.svg"
-                className="h-8 w-auto"
-              />
+            <h1 className="font-bold text-purple-600 text-2xl font-noto">Buyers First</h1>
             </div>
             <div className="hidden sm:flex justify-center w-full">
               <div className="flex space-x-16"> {/* Adjust space-x as needed */}
@@ -230,7 +227,7 @@ const handleImageChange = (newImage) => {
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
+                  {/* <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
                     <MessageSquare className="w-6 h-6 text-gray-700" />
                     <div>
                       <p className="text-sm font-bold text-gray-800 hover:text-violet-700 transition">
@@ -238,7 +235,7 @@ const handleImageChange = (newImage) => {
                       </p>
                       <p className="text-xs text-gray-600">Messages and Mails</p>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
                     <MessageCircle className="w-6 h-6 text-gray-700" />
@@ -258,7 +255,7 @@ const handleImageChange = (newImage) => {
                       <p className="text-xs text-gray-600">See Requests</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
+                  {/* <div className="flex items-center space-x-3 py-2 p-2 rounded-lg cursor-pointer hover:bg-violet-200 transition">
                     <MessageCircle className="w-6 h-6 text-gray-700" />
                     <div>
                       <Link to="/agents/adminchat" className="text-sm font-bold text-gray-800 hover:text-violet-700 transition">
@@ -266,7 +263,7 @@ const handleImageChange = (newImage) => {
                       </Link>
                       <p className="text-xs text-gray-600">See Proposals</p>
                     </div>
-                  </div>
+                  </div> */}
 
                   <button
                     onClick={handleLogout}

@@ -5,14 +5,12 @@ import axiosInstance from "../../../../../utils/axiosInstance";
 export default function PropertyStep({ details, updateDetails }) {
   const bedroomOptions = ["1", "2", "3", "4+"];
   const priceRanges = [
-    "Less than $200k",
-    "$200k to $400k",
-    "$400k to $600k",
-    "$600k to $800k",
-    "$800k to $1m",
-    "$1m to $1.5m",
-    "$1.5m to $2m",
-    "$2m+",
+    "Less than $449,000",
+    "$450,000–$699,999",
+    "$700,000–$999,999",
+    "$1m–$1.49m",
+    "$1.5m–$2.49m",
+    "$2.5m or more",
   ];
 
   const [propertyTypes, setPropertyTypes] = useState([]);
@@ -38,49 +36,47 @@ export default function PropertyStep({ details, updateDetails }) {
   }, []);
 
   const getButtonClasses = (isSelected) => `
-    flex items-center px-4 py-2 rounded-full border-2 text-base transition-all duration-300 ease-in-out transform hover:scale-105 delay-100
+    flex items-center px-4 py-2 rounded-lg border-2 text-base font-medium transition-colors
     ${
       isSelected
-        ? "bg-gradient-to-r from-purple-500 to-violet-700 text-white border-purple-600"
-        : "border-purple-600 text-purple-600 hover:bg-violet-100"
+        ? "bg-slate-600 text-white border-slate-600"
+        : "border-slate-400 text-slate-600 hover:bg-slate-100"
     }
   `;
 
   return (
-    <div className="mx-auto w-[90%] text-left">
-      <div className="space-y-10 text-black">
+    <div className="mx-auto w-full max-w-2xl text-left">
+      <div className="space-y-8 text-gray-900">
         {/* Property Type - Dynamic */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">
+          <h3 className="text-lg font-semibold mb-3">
             What type of property are you looking to buy?
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {error ? (
-              <p className="text-red-500">{error}</p>
+              <p className="text-red-500 text-sm">{error}</p>
             ) : propertyTypes.length > 0 ? (
               propertyTypes.map((type) => (
                 <button
                   key={type.name}
                   onClick={() => updateDetails({ propertyType: type._id })}
-                  className={getButtonClasses(
-                    details.propertyType === type._id
-                  )}
+                  className={getButtonClasses(details.propertyType === type._id)}
                 >
                   {type.name}
                 </button>
               ))
             ) : (
-              <p>Loading property types...</p>
+              <p className="text-sm text-gray-500">Loading property types...</p>
             )}
           </div>
         </div>
 
         {/* Bedrooms */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">
+          <h3 className="text-lg font-semibold mb-3">
             How many bedrooms are you looking for?
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {bedroomOptions.map((name) => (
               <button
                 key={name}
@@ -95,10 +91,10 @@ export default function PropertyStep({ details, updateDetails }) {
 
         {/* Price Range */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">
+          <h3 className="text-lg font-semibold mb-3">
             What's your ideal price range for the property?
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {priceRanges.map((name) => (
               <button
                 key={name}

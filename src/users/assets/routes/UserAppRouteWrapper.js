@@ -9,8 +9,12 @@ const UserAppRouteWrapper = () => {
   const navigate = useNavigate(); // Navigation hook
 
   useEffect(() => {
-    const token = Cookies.get("authToken"); // Retrieve JWT token from cookies
+    var token = Cookies.get("authToken"); // Retrieve JWT token from cookies
 
+    console.log(Cookies.get())
+    if(!token){
+      token = Cookies.get("auth_token");
+    }
 
     if (token) {
       try {

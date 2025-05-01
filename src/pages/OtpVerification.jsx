@@ -26,7 +26,8 @@ function OTPVerificationForm() {
         <div className="max-w-[420px] mx-auto">
           {/* Logo */}
           <h1 className="text-[22px] font-bold text-[#7F56D9] mb-12">
-            FindMyAgent
+          Buyers First
+
           </h1>
 
           {/* Back Button */}

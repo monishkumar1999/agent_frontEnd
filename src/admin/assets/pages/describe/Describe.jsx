@@ -15,7 +15,7 @@ const Describe = () => {
 
     // Fetch existing describes on component mount or when token changes
     const fetchDescribes = async () => {
-        if (!token) return;
+       
 
         setLoading(true);
         setError(null);

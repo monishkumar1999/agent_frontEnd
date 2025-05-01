@@ -46,7 +46,7 @@ const DetailsForm = () => {
         return false;
       }
     } else if (currentStep === 1) {
-      if (!details.location || !details.pincode) {
+      if (!details.location ) {
         toast.error("Please enter a location and pincode before proceeding!", {
           position: "top-center",
         });
@@ -54,9 +54,7 @@ const DetailsForm = () => {
       }
     } else if (currentStep === 2) {
       if (
-        !details.selectedPlan ||
-        !details.selectedPurpose ||
-        !details.selectedUserCommunication
+        !details.selectedPlan 
       ) {
         toast.error(
           "Please fill all fields in 'Your Needs' before proceeding!",

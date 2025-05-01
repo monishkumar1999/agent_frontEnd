@@ -3,7 +3,8 @@ import axiosInstance from '../../../utils/axiosInstance';
 import { FaPhone, FaEnvelope, FaUser , FaStar, FaMapMarkerAlt, FaBuilding, FaRegHandshake, FaEdit } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-const NOPROFILE_BASE = "http://localhost:8000";
+import { IMGURL } from '../../../utils/imgpath';
+const NOPROFILE_BASE = IMGURL;
 
 const AgentProfile = () => {
     const [agent, setAgent] = useState(null);

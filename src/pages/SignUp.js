@@ -86,11 +86,11 @@ function SignUp({ onSignupSuccess }) {
       const response = await axiosInstance.post("/agent/register", signupData);
       onSignupSuccess(signupData.email);
       console.log(response);
-        toast.success(response.data.message)
+        // toast.success(response.data.message)
       // console.log("Signup successful:", response.data);
     } catch (e) {
       console.log(e.response);
-        toast.error(e.response.data.message)
+        // toast.error(e.response.data.message)
       // console.error("Error during signup:", error);
     } finally {
       setLoading(false);
@@ -106,7 +106,7 @@ function SignUp({ onSignupSuccess }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h3 className="text-xl md:text-2xl font-semibold text-center">Create an Account</h3>
+      <h3 className="text-xl md:text-2xl font-semibold text-center">Create an Accounts</h3>
       
       <InputField label="First Name" type="text" name="firstName" value={signupData.firstName} onChange={handleChange} error={errors.firstName} />
       <InputField label="Last Name" type="text" name="lastName" value={signupData.lastName} onChange={handleChange} error={errors.lastName} />

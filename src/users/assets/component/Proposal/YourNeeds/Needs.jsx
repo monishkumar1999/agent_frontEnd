@@ -21,9 +21,7 @@ export default function NeedsStepper({ details, updateDetails }) {
         }
 
         // Fetch communication options
-        const communicationResponse = await axiosInstance.get(
-          "/communicate/view"
-        );
+        const communicationResponse = await axiosInstance.get("/communicate/view");
         if (Array.isArray(communicationResponse.data.data)) {
           setCommunicationOptions(communicationResponse.data.data);
         } else {
@@ -39,23 +37,23 @@ export default function NeedsStepper({ details, updateDetails }) {
   }, []);
 
   const getButtonClasses = (isSelected) => `
-    flex items-center px-4 py-2 rounded-full border-2 text-base transition-all duration-300 ease-in-out transform
+    flex items-center px-4 py-2 rounded-lg border-2 text-base font-medium transition-colors
     ${
       isSelected
-        ? "bg-gradient-to-r from-purple-500 to-violet-800 text-white border-transparent shadow-lg scale-100 hover:scale-110"
-        : "border-[#8A2BE2] text-[#8A2BE2] hover:bg-violet-100 hover:shadow-md hover:scale-105 transition delay-100"
+        ? "bg-slate-600 text-white border-slate-600"
+        : "border-slate-400 text-slate-600 hover:bg-slate-100"
     }
   `;
 
   return (
-    <div className="mx-auto w-[90%] text-left">
-      <div className="space-y-10 text-black">
+    <div className="mx-auto w-full max-w-2xl text-left">
+      <div className="space-y-6 text-gray-900">
         {/* Planning to Buy */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">
+          <h3 className="text-lg font-semibold mb-2">
             When are you planning to buy your new home?
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {planningType.map((type) => (
               <button
                 key={type}
@@ -70,95 +68,59 @@ export default function NeedsStepper({ details, updateDetails }) {
 
         {/* Purpose of Purchase - Now Dynamic */}
         <div>
-          <h3 className="text-xl font-semibold mb-4">
+          <h3 className="text-lg font-semibold mb-2">
             What’s the purpose of your purchase?
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2">
             {error ? (
-              <p className="text-red-500">{error}</p>
+              <p className="text-red-500 text-sm">{error}</p>
             ) : purchaseOptions.length > 0 ? (
               purchaseOptions.map((type) => (
                 <button
                   key={type.name}
                   onClick={() => updateDetails({ selectedPurpose: type._id })}
-                  className={getButtonClasses(
-                    details.selectedPurpose === type._id
-                  )}
+                  className={getButtonClasses(details.selectedPurpose === type._id)}
                 >
                   {type.name}
                 </button>
               ))
             ) : (
-              <p>Loading options...</p>
-            )}
-          </div>
-        </div>
-
-        {/* Preferred Communication - Now Dynamic */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">
-            What’s your preferred way to communicate?
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {error ? (
-              <p className="text-red-500">{error}</p>
-            ) : communicationOptions.length > 0 ? (
-              communicationOptions.map((type) => (
-                <button
-                  key={type.name}
-                  onClick={() =>
-                    updateDetails({ selectedUserCommunication: type._id })
-                  }
-                  className={getButtonClasses(
-                    details.selectedUserCommunication === type._id
-                  )}
-                >
-                  {type.name}
-                </button>
-              ))
-            ) : (
-              <p>Loading options...</p>
+              <p className="text-sm text-gray-500">Loading options...</p>
             )}
           </div>
         </div>
 
         {/* Additional Questions */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-900">
-              Are you pre-qualified or pre-approved for a mortgage?
-            </label>
-            <select
-              value={details.isLegalReady || ""}
-              onChange={(e) => updateDetails({ isLegalReady: e.target.value })}
-              className="mt-1 block w-full h-[50px] text-black rounded-md border-2 transition-all duration-300 ease-in-out transform
-                border-[#8A2BE2] bg-white shadow-md
-                focus:outline-none focus:ring-2 focus:ring-[#8A2BE2] 
-                hover:bg-violet-100 hover:shadow-md hover:scale-105 transition delay-100"
-            >
-              <option value="">Select</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-900">
-              Would you like assistance with negotiation and closing?
-            </label>
-            <select
-              value={details.isAssistance || ""}
-              onChange={(e) => updateDetails({ isAssistance: e.target.value })}
-              className="mt-1 block w-full h-[50px] text-black rounded-md border-2 transition-all duration-300 ease-in-out transform
-                border-[#8A2BE2] bg-white shadow-md
-                focus:outline-none focus:ring-2 focus:ring-[#8A2BE2] 
-                hover:bg-violet-100 hover:shadow-md hover:scale-105 transition delay-100"
-            >
-              <option value="">Select</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="flex flex-col">
+    <label className="block text-sm font-bold text-gray-900 mb-2 whitespace-nowrap">
+      Are you a first-time home buyer?
+    </label>
+    <select
+      value={details.isLegalReady || ""}
+      onChange={(e) => updateDetails({ isLegalReady: e.target.value })}
+      className="w-full h-10 px-3 text-black rounded-md border-2 border-slate-400 bg-white focus:outline-none focus:border-slate-600"
+    >
+      <option value="">Select</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+  <div className="flex flex-col">
+    <label className="block text-sm font-bold text-gray-900 mb-2 whitespace-nowrap">
+      Are you pre-qualified or pre-approved for a mortgage?
+    </label>
+    <select
+      value={details.isAssistance || ""}
+      onChange={(e) => updateDetails({ isAssistance: e.target.value })}
+      className="w-full h-10 px-3 text-black rounded-md border-2 border-slate-400 bg-white focus:outline-none focus:border-slate-600"
+    >
+      <option value="">Select</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+</div>
       </div>
     </div>
   );

@@ -1,77 +1,57 @@
-import React, { useState, useRef } from "react";
-import img from "./object"; // Import agent images
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-cards";
-
+import React from "react";
+import img from "./object"; // Ensure this is an array of agent objects
+import { AiFillStar } from "react-icons/ai";
+import Approved from "../pages/Approved";
 const SwipperCard = ({ className = "" }) => {
-  const [selectedAgentIndex, setSelectedAgentIndex] = useState(0); // ✅ Track selected agent index
-  const swiperRef = useRef(null); // ✅ Store Swiper instance
-
-  // ✅ Function to update agent details on swipe
-  const handleSlideChange = (swiper) => {
-    setSelectedAgentIndex(swiper.activeIndex); // ✅ Sync details with active Swiper slide
-  };
-
-  // ✅ Function to update agent details on image click (Does NOT move Swiper)
-  const handleAgentClick = (index) => {
-    setSelectedAgentIndex(index);
-  };
-
   return (
-    <section className={`relative flex flex-col items-center pb-20 w-full text-gray-900 ${className}`}>
-      <h1 className="text-4xl  font-semibold text-gray-800 text-center mb-8">
-        Meet Our <span className=" text-blue-600">Top-Rated Agents</span>
-      </h1>
+    <section className={`w-full flex flex-col items-center py-10 ${className}`}>
+       <h1 className="text-2xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2  py-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in ">
+       Meet Our Top-Rated Agents
+          </h1>
 
-      {/* Main Container (Centered) */}
-      <div className="flex flex-col md:flex-row items-center justify-center w-full max-w-6xl gap-14 md:gap-20">
-        
-        {/* Left Side - Swipable Agent Image (Larger & Centered) */}
-        <div className="w-80 h-80 md:w-96 md:h-96 flex-shrink-0 flex items-center justify-center">
-          <Swiper
-            className="swiper w-full h-full"
-            modules={[EffectCards]}
-            effect="cards"
-            grabCursor={true}
-            speed={500}
-            loop={false} // ✅ No looping, just 4 images
-            slidesPerView={1} // ✅ Show one image at a time
-            onSwiper={(swiper) => (swiperRef.current = swiper)} // ✅ Store Swiper instance
-            onSlideChange={handleSlideChange} // ✅ Sync agent details on swipe
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 px-4 max-w-6xl w-full">
+        {img.map((agent, index) => (
+          <div
+            key={index}
+            className="flex items-center bg-white rounded-xl shadow-md p-4 w-full max-w-lg hover:shadow-lg transition font-sans"
           >
-            {img.map((agent, index) => (
-              <SwiperSlide
-                key={index}
-                className="swiper-slide flex items-center justify-center rounded-full"
-                onClick={() => handleAgentClick(index)} // ✅ Clicking image updates only details
-              >
-                <img
-                  src={agent.image}
-                  alt={agent.name}
-                  className="w-full h-full object-cover rounded-xl shadow-xl cursor-pointer"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
 
-        {/* Right Side - Agent Details (Perfectly Aligned) */}
-        <div className="flex-1 p-8 border border-gray-300 rounded-lg shadow-lg max-w-lg text-center md:text-left">
-          <h2 className="text-3xl  font-bold text-gray-900">{img[selectedAgentIndex].name}</h2>
-          <p className="text-lg  text-gray-700 mt-2 font-semibold">{img[selectedAgentIndex].jobrole}</p>
-          <p className="text-md  font-medium text-gray-500 mt-1">{img[selectedAgentIndex].location}</p>
+            
+            {/* Image */}
+            <img
+              src={agent.image}
+              alt={agent.name}
+              className="w-36 h-36 rounded-lg object-cover mr-4"
+            />
 
-          <span className="mt-5 px-5 py-2 bg-blue-600 text-white text-md rounded-md inline-block shadow-md">
-            ⭐ {img[selectedAgentIndex].rating}
-          </span>
+            {/* Info */}
+            <div className="flex flex-col justify-between h-full w-full">
+              {/* Name and Rating */}
+              <div className="flex justify-between items-start">
+                <h2 className="text-lg font-bold text-gray-900 font-sans">{agent.name}</h2>
+                <div className="flex items-center text-yellow-500 text-sm font-semibold">
+                 
+                <AiFillStar className="ml-1 text-base" />
+                  {agent.rating}
+                </div>
+              </div>
 
-          <p className="mt-6  text-gray-700 text-lg leading-relaxed">
-            {img[selectedAgentIndex].description}
-          </p>
-        </div>
+              {/* Role and Location */}
+              {/* <p className="text-sm text-gray-500 mt-1">{agent.jobrole} at {agent.location}</p> */}
+              <p className="text-sm text-gray-700 mt-2 line-clamp-2 font-sans">{agent.description}</p>
+              {/* Description */}
+              {/* <p className="text-sm text-gray-700 mt-2 line-clamp-2">{agent.description}</p> */}
+
+              {/* Role Tag + Icons */}
+              <div className="flex justify-between items-center mt-3">
+                <span className="text-purple-600 text-sm font-semibold">{agent.location}</span>
+               
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
+
     </section>
   );
 };

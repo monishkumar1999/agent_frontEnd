@@ -64,7 +64,7 @@ const Footer = ({
 
       {/* Divider */}
       <div className="border-t border-gray-300 mt-4 pt-2 text-center text-xs text-gray-600">
-        <p>© 2024 FindMyAgent, Ltd. All Rights Reserved.</p>
+        <p>© 2024 Buyers First, Ltd. All Rights Reserved.</p>
       </div>
     </footer>
   );

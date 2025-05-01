@@ -62,7 +62,7 @@ const Sidebar = () => {
     },
     { key: 'chat', label: 'Chating Users', path: '/admin/chat', icon: <FaTachometerAlt /> },
     { key: 'chat', label: 'Chating Agent', path: '/admin/agent-chat/agent', icon: <FaTachometerAlt /> },
-    { key: 'chat', label: 'Swipper', path: '/admin/swipper', icon: <FaTachometerAlt /> },
+    // { key: 'chat', label: 'Swipper', path: '/admin/swipper', icon: <FaTachometerAlt /> },
   ];
 
   return (
@@ -72,11 +72,7 @@ const Sidebar = () => {
     >
       {/* Sidebar Header */}
       <div className="p-4 flex items-center justify-center mx-4">
-        <img
-          src="https://agentmatchr.com/images/findmyagent.svg" // Replace with your logo path
-          alt="Logo"
-          className={`transition-all duration-300 ${isSidebarOpen ? 'w-28 ' : 'w-8 h-8'}`}
-        />
+      <h1 className="font-bold text-purple-600 text-2xl font-noto">Buyers First</h1>
       </div>
 
       {/* Sidebar Navigation */}

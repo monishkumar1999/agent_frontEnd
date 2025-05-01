@@ -47,7 +47,7 @@ const DetailsForm = () => {
         return false;
       }
     } else if (currentStep === 1) {
-      if (!details.location || !details.pincode) {
+      if (!details.location ) {
         toast.error("Please enter a location and pincode before proceeding!", {
           position: "top-center",
         });

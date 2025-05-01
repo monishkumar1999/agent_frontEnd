@@ -8,6 +8,9 @@ import Footer from "../components/Footer";
 import HeaderComponent from "../components/Header";
 import HeroBanner from "../components/HeroBanner";
 import SwipperCard from "../swippertest/SwipperCard";
+import DetailsForm from "../users/assets/component/DetailsForm";
+import FindAgentForm from "../components/FindAgentForm";
+import Approved from "./Approved";
 
 const LandingPage = () => {
   const agentsRef = useRef(null);
@@ -26,16 +29,13 @@ const LandingPage = () => {
    
 
       {/* Hero Section */}
-      <div className="px-4 sm:px-6 lg:px-8">
+      <div className="">
         <HeroBanner scrollToAgents={scrollToAgents} />
       </div>
 
-      {/* Agent Benefits Section */}
-      <div className="py-12 sm:py-16 lg:py-20">
-        <AgentBenefits />
-      </div>
+     
 
-      {/* How It Works Section */}
+      {/* How It Works Section
       <div className="p-8 sm:p-12 lg:p-16 mt-[-100px]">
         <HowItWorks
           image="/images/work.png"
@@ -44,23 +44,35 @@ const LandingPage = () => {
           empty1="/frame-1618873333.svg"
           empty2="/frame-1618873334.svg"
         />
+      </div> */}
+
+
+
+<div className="py-12 sm:py-16 lg:py-20">
+      <FindAgentForm />
       </div>
 
+      
+
       {/* Top Rated Agents Section */}
-      <div className="py-12 sm:py-16 lg:py-20">
+      <div className="">
         <SwipperCard />
         {/* <TopRatedAgents /> */}
       </div>
 
+  
+      
+     
+
       {/* Vetting Section */}
-      <div className="p-6 sm:p-8 lg:p-16">
+      {/* <div className="p-6 sm:p-8 lg:p-16">
         <Vetting
           image="/images/house2.png"
           fIndMyAgent="/images/findmyagent.svg"
           image1="/images/house3.png"
           image2="/images/house1.png"
         />
-      </div>
+      </div> */}
 
       {/* Agents Section */}
       {/* <div ref={agentsRef} className="py-12 sm:py-16 lg:py-20">

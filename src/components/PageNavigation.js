@@ -114,8 +114,10 @@ const PageNavigation = ({ className = "" }) => {
           />
           <div className="w-[1121px] flex flex-row items-start justify-start py-0 pl-[326px] pr-[325px] box-border max-w-full shrink-0 mq450:pl-5 mq450:pr-5 mq450:box-border mq750:pl-[81px] mq750:pr-[81px] mq750:box-border mq1275:pl-[163px] mq1275:pr-[162px] mq1275:box-border">
             <div className="flex-1 relative tracking-[0.01em]">
-              Copyright © 2024 FindMyAgent., Ltd. All Rights Reserved.
-              FindMyAgent
+              Copyright © 2024 BuyersFirst
+              ., Ltd. All Rights Reserved.
+              BuyersFirst
+
             </div>
           </div>
         </div>

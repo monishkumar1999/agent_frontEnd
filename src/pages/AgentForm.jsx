@@ -42,10 +42,9 @@ function AgentForm() {
   return (
     <div className="flex flex-col md:flex-row min-h-screen items-center bg-cover bg-center p-4 md:p-0 bg-gray-100 md:bg-[url('https://www.pixelstalk.net/wp-content/uploads/2016/05/1920x1200-Wallpapers-High-Quality-Desktop.jpg')]">
       <div className="hidden md:flex w-full md:w-1/2 flex-col justify-center p-4 md:p-8 text-white text-center md:text-left relative">
-        <div className="absolute top-5 left-5">
-          <img src="/images/findmyagent.svg" alt="FindMyAgent Logo" className="w-24 md:w-32" />
-        </div>
-        <h1 className="text-3xl md:text-4xl font-bold">Join <span className="text-green-400">FindMyAgent</span> Connecting You to Your Dream Home with Trusted Agents</h1>
+        <div className="absolute top-3 left-5 ">
+        <h1 className="font-bold text-purple-600 text-2xl font-noto ">Buyers First</h1></div>
+        <h1 className="text-3xl md:text-4xl font-bold">Join <span className="text-green-400">Buyers First</span> Connecting You to Your Dream Home with Trusted Agents</h1>
         <p className="text-base md:text-lg mt-4">Find. Connect. Buy. Your Perfect Agent Awaits.</p>
       </div>
       <div className="w-full md:w-1/2 flex flex-col items-center p-4 md:p-8">

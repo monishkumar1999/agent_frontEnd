@@ -17,8 +17,8 @@ const Login = lazy(() => import("../login/Login"));
 const Master = lazy(() => import("../pages/Master/Master"));
 
 const AppRoutes = () => {
-  const token = Cookies.get("auth_token");
-
+  const token = Cookies.get("authToken");
+ 
   return (
     <Suspense
       fallback={

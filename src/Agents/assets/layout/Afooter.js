@@ -6,9 +6,10 @@ const Afooter = () => {
       <div className="container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-center md:text-left">
         {/* Logo and About */}
         <div>
-          <h2 className="text-lg font-bold">FindMyAgent</h2>
+          <h2 className="text-lg font-bold">BuyersFirst
+          </h2>
           <p className="mt-1 text-gray-600">
-            Connecting buyers with trusted agents in the UK & AUS markets.
+            Connecting buyers with trusted agents in the AUS markets.
           </p>
         </div>
 
