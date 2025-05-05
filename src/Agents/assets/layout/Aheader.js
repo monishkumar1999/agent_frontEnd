@@ -30,12 +30,11 @@ useEffect(() => {
         try {
             const response = await axiosInstance.get("/agent/get-agent-details");
             if (response.data.data) {
-                const { firstName, lastName, username, email, profile_img } = response.data.data;
+                const { firstName, username, email, profile_img } = response.data.data;
                 const avatarUrl = profile_img ? `${NOPROFILE_BASE}${profile_img}` : "https://api.dicebear.com/7.x/adventurer/svg?seed=Businessman";
                 setUser ({
-                    name: `${firstName} ${lastName}`,
-                    username: email,
-                    profilePic: avatarUrl,
+                    name: `${firstName}`,
+                  profilePic: avatarUrl,
                 });
             }
         } catch (error) {
@@ -207,10 +206,10 @@ const handleImageChange = (newImage) => {
                         className="w-12 h-12 rounded-full border border-gray-300"
                       />
                       <div>
-                        <p className="text-lg font-semibold text-gray-800 hover:text-violet-700 transition">
+                        <p className="text-lg font-semibold text-gray-800 hover:text-violet-700 transition font-mainfont">
                           {user.name}
                         </p>
-                        <p className="text-sm text-gray-500">@{user.username}</p>
+                      
                       </div>
                     </div>
                   </div>

@@ -1,0 +1,30 @@
+/* Modal content transitions */
+.submission-modal {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .submission-modal.ReactModal__Content--after-open {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .submission-modal.ReactModal__Content--before-close {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  
+  /* Overlay transitions */
+  .submission-modal-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .submission-modal-overlay.ReactModal__Overlay--after-open {
+    opacity: 1;
+  }
+  
+  .submission-modal-overlay.ReactModal__Overlay--before-close {
+    opacity: 0;
+  }

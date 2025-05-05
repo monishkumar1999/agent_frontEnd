@@ -14,7 +14,7 @@ const Footer = ({
 
   return (
     <footer
-      className={`relative bg-lavender-100 text-black font-instrument-sans ${className}`}
+      className={`relative bg-gray-100 text-black font-instrument-sans ${className}`}
     >
       {/* Background image */}
       
@@ -22,8 +22,12 @@ const Footer = ({
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
         {/* Logo */}
         <div className="flex flex-col items-start space-y-2">
-        <h1 className="font-bold text-purple-600 text-2xl font-noto">Buyers First</h1>
-          <p className="text-xs text-gray-600">Helping you connect smarter.</p>
+        <img
+            src="/images/logo.png"
+            alt="FindMyAgent Logo"
+            className="w-[100px] sm:w-[130px]"
+          />
+         
         </div>
 
         {/* Section 1 */}

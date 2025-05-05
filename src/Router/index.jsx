@@ -21,6 +21,7 @@ import LoginPage from "../pages/LoginPage";
 import UserAppRoutes from "../users/assets/routes/UserAppRoute";
 import AgentRoutes from "../Agents/assets/routes/AgentRoutes";
 import ShowAgent from "../components/ShowAgent";
+import AgentDetails from "../components/AgentDetails";
 
 export default function Router() {
 
@@ -41,6 +42,7 @@ export default function Router() {
         <Route path="/register" element={<AgentForm />} />
         <Route path="/HowItWorks" element={<ExplaingPage />} />
         <Route path="/showAgent" element={<ShowAgent />} />
+        <Route path="/agent/:agentId" element={<AgentDetails />} />
         <Route
           path="/BuyerAgentDetailsPageInfo"
           element={<BuyerAgentDetailsPageInfo />}
@@ -54,6 +56,8 @@ export default function Router() {
         <Route path="/chat/:user" element={<Chat />} />
 
         <Route path="/user/login" element={<LoginPage />} />
+
+   
 
         {/* Admin Routes */}
         <Route path="/admin/*" element={<AppRoutes />} />

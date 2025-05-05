@@ -3,33 +3,27 @@ import axiosInstance from "../../../../../utils/axiosInstance";
 
 export default function NeedsStepper({ details, updateDetails }) {
   const planningType = ["Immediately", "1-3 months", "4-5 months", "6+ months"];
-
   const [purchaseOptions, setPurchaseOptions] = useState([]);
-  const [communicationOptions, setCommunicationOptions] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch purchase and communication options from backend
+  // Fetch purchase options from backend
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        // Fetch purchase options
+        setLoading(true);
         const purchaseResponse = await axiosInstance.get("/purchase/view");
+        console.log("Purchase options response:", purchaseResponse.data); // Debug log
         if (Array.isArray(purchaseResponse.data.data)) {
           setPurchaseOptions(purchaseResponse.data.data);
         } else {
           throw new Error("Invalid purchase data format");
         }
-
-        // Fetch communication options
-        const communicationResponse = await axiosInstance.get("/communicate/view");
-        if (Array.isArray(communicationResponse.data.data)) {
-          setCommunicationOptions(communicationResponse.data.data);
-        } else {
-          throw new Error("Invalid communication data format");
-        }
       } catch (error) {
-        console.error("Error fetching options:", error);
-        setError("Failed to load options");
+        console.error("Error fetching purchase options:", error);
+        setError(error.response?.data?.message || "Failed to load purchase options");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -66,18 +60,20 @@ export default function NeedsStepper({ details, updateDetails }) {
           </div>
         </div>
 
-        {/* Purpose of Purchase - Now Dynamic */}
+        {/* Purpose of Purchase */}
         <div>
           <h3 className="text-lg font-semibold mb-2">
             What’s the purpose of your purchase?
           </h3>
           <div className="flex flex-wrap gap-2">
-            {error ? (
+            {loading ? (
+              <p className="text-sm text-gray-500">Loading options...</p>
+            ) : error ? (
               <p className="text-red-500 text-sm">{error}</p>
             ) : purchaseOptions.length > 0 ? (
               purchaseOptions.map((type) => (
                 <button
-                  key={type.name}
+                  key={type._id}
                   onClick={() => updateDetails({ selectedPurpose: type._id })}
                   className={getButtonClasses(details.selectedPurpose === type._id)}
                 >
@@ -85,42 +81,42 @@ export default function NeedsStepper({ details, updateDetails }) {
                 </button>
               ))
             ) : (
-              <p className="text-sm text-gray-500">Loading options...</p>
+              <p className="text-sm text-gray-500">No purchase options available.</p>
             )}
           </div>
         </div>
 
         {/* Additional Questions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-  <div className="flex flex-col">
-    <label className="block text-sm font-bold text-gray-900 mb-2 whitespace-nowrap">
-      Are you a first-time home buyer?
-    </label>
-    <select
-      value={details.isLegalReady || ""}
-      onChange={(e) => updateDetails({ isLegalReady: e.target.value })}
-      className="w-full h-10 px-3 text-black rounded-md border-2 border-slate-400 bg-white focus:outline-none focus:border-slate-600"
-    >
-      <option value="">Select</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
-  </div>
-  <div className="flex flex-col">
-    <label className="block text-sm font-bold text-gray-900 mb-2 whitespace-nowrap">
-      Are you pre-qualified or pre-approved for a mortgage?
-    </label>
-    <select
-      value={details.isAssistance || ""}
-      onChange={(e) => updateDetails({ isAssistance: e.target.value })}
-      className="w-full h-10 px-3 text-black rounded-md border-2 border-slate-400 bg-white focus:outline-none focus:border-slate-600"
-    >
-      <option value="">Select</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
-  </div>
-</div>
+          <div className="flex flex-col">
+            <label className="block text-sm font-bold text-gray-900 mb-2 whitespace-nowrap">
+              Are you a first-time home buyer?
+            </label>
+            <select
+              value={details.isLegalReady || ""}
+              onChange={(e) => updateDetails({ isLegalReady: e.target.value })}
+              className="w-full h-10 px-3 text-black rounded-md border-2 border-slate-400 bg-white focus:outline-none focus:border-slate-600"
+            >
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label className="block text-sm font-bold text-gray-900 mb-2 whitespace-nowrap">
+              Are you pre-qualified or pre-approved for a mortgage?
+            </label>
+            <select
+              value={details.isAssistance || ""}
+              onChange={(e) => updateDetails({ isAssistance: e.target.value })}
+              className="w-full h-10 px-3 text-black rounded-md border-2 border-slate-400 bg-white focus:outline-none focus:border-slate-600"
+            >
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );

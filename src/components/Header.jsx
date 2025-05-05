@@ -1,46 +1,98 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+import { FaUserCircle } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
 
 const HeaderComponent = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
     window.addEventListener("scroll", handleScroll);
+
+    const token = Cookies.get('authToken');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUserData({
+          role: decoded.role,
+          name: decoded.name || decoded.email || "User",
+        });
+      } catch (error) {
+        console.error("Invalid token:", error);
+        setUserData(null);
+      }
+    }
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleLogout = () => {
+    Cookies.remove("authToken");
+    setUserData(null);
+    navigate("/"); // Redirect after logout
+  };
+
   return (
     <header
-      className={`sticky top-0 z-50 flex items-center justify-between py-3 px-4 sm:px-6 lg:px-16 bg-white transition-shadow duration-300 ${
+      className={`sticky top-0 z-50 flex justify-between items-center py-3 px-4 sm:px-6 lg:px-8 bg-white transition-shadow duration-300 ${
         isScrolled ? "shadow-md" : ""
       }`}
     >
       {/* Logo */}
-      <div className="flex items-center">
-        <a href="/" aria-label="FindMyAgent Home">
-          <h1 className="font-bold text-purple-600 text-2xl font-noto">Buyers First</h1>
-        </a>
-      </div>
+      <a href="/" aria-label="FindMyAgent Home">
+        <img
+          src="/images/logo.png"
+          alt="FindMyAgent Logo"
+          className="w-[100px] sm:w-[130px]"
+        />
+      </a>
 
-      {/* Navigation Buttons */}
-      <div className="ml-auto flex items-center space-x-2 sm:space-x-4">
-        {/* Become an Agent Button - Responsive */}
-        <a
-          href="/register"
-          className="text-sm sm:text-base px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-blue-500 to-pink-500 text-white font-medium rounded-lg sm:rounded-xl shadow hover:opacity-90 transition"
-        >
-          Become An Agent
-        </a>
+      {/* Navigation / User Info */}
+      <div className="ml-auto flex items-center space-x-4">
+        {userData ? (
+          <div className="relative">
+            <button
+              className="flex items-center space-x-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-pink-500 text-white font-medium hover:opacity-90 transition"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            >
+              <FaUserCircle className="text-lg" />
+              <span className="hidden sm:inline">Hello, {userData.name}</span>
+            </button>
 
-        {/* Login Button */}
-        <Link to="/user/login">
-          <button className="text-sm sm:text-base px-3 py-1.5 sm:px-5 sm:py-2 bg-gradient-to-r from-blue-500 to-pink-500 text-white font-medium rounded-lg sm:rounded-xl shadow hover:opacity-90 transition">
-            User
-          </button>
-        </Link>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 shadow-lg rounded-lg overflow-hidden z-50">
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                >
+                  <FiLogOut className="mr-2" /> Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <a
+              href="/register"
+              className="text-sm sm:text-base px-4 py-2 bg-gradient-to-r from-blue-500 to-pink-500 text-white font-medium rounded-full shadow hover:opacity-90 transition"
+            >
+              Become An Agent
+            </a>
+            <Link to="/user/login">
+              <button className="text-sm sm:text-base px-4 py-2 bg-gradient-to-r from-blue-500 to-pink-500 text-white font-medium rounded-full shadow hover:opacity-90 transition">
+                Buyer Login
+              </button>
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

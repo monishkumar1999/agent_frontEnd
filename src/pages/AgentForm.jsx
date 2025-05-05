@@ -6,7 +6,6 @@ import SignUp from "../pages/SignUp";
 import axiosInstance from "../utils/axiosInstance";
 
 function AgentForm() {
- 
   const [isLogin, setIsLogin] = useState(true);
   const [otp, setOtp] = useState(null);
   const [showOtpForm, setShowOtpForm] = useState(false);
@@ -40,35 +39,76 @@ function AgentForm() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen items-center bg-cover bg-center p-4 md:p-0 bg-gray-100 md:bg-[url('https://www.pixelstalk.net/wp-content/uploads/2016/05/1920x1200-Wallpapers-High-Quality-Desktop.jpg')]">
-      <div className="hidden md:flex w-full md:w-1/2 flex-col justify-center p-4 md:p-8 text-white text-center md:text-left relative">
-        <div className="absolute top-3 left-5 ">
-        <h1 className="font-bold text-purple-600 text-2xl font-noto ">Buyers First</h1></div>
-        <h1 className="text-3xl md:text-4xl font-bold">Join <span className="text-green-400">Buyers First</span> Connecting You to Your Dream Home with Trusted Agents</h1>
-        <p className="text-base md:text-lg mt-4">Find. Connect. Buy. Your Perfect Agent Awaits.</p>
+    <div className="flex flex-col md:flex-row min-h-screen bg-white">
+      {/* Left Section - Branding and Agent-Focused Messaging */}
+      <div className="hidden md:flex w-full md:w-1/2 flex-col justify-center items-center p-8 bg-white text-black transition-all duration-300">
+        <div className="text-center font-poppins">
+          <img
+            src="images/logo.png"
+            alt="AgentPro Logo"
+            className="w-40 h-auto mx-auto mb-6"
+          />
+          <h2 className="text-3xl md:text-4xl font-bold mt-4">
+            Earn More with <span className="text-2xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2 py-6 bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent animate-fade-in">Buyers First</span>
+          </h2>
+          <p className="text-xl mt-4 font-semibold text-gray-600">
+            Join the leading platform for real estate agents. Connect with motivated buyers and boost your commissions.
+          </p>
+          <p className="text-base mt-2 opacity-80 italic">
+            Maximize your earning potential with exclusive leads and advanced tools.
+          </p>
+        </div>
       </div>
-      <div className="w-full md:w-1/2 flex flex-col items-center p-4 md:p-8">
-        <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg h-[600px] flex flex-col justify-between">
-          <div className="overflow-y-auto h-full">
+
+      {/* Right Section - Form */}
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-4 md:p-8 bg-white">
+        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl border">
+          {/* Mobile Logo */}
+          <div className="md:hidden text-center mb-6">
+            <img
+              src="images/logo.png"
+              alt="AgentPro Logo"
+              className="w-32 h-auto mx-auto"
+            />
+          </div>
+          <div className="flex justify-between border-b border-gray-200 mb-6">
+            <button
+              className={`w-1/2 py-3 text-lg font-medium transition-all duration-200 ${
+                isLogin ? "border-b-4 border-blue-600 text-blue-600" : "text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setIsLogin(true)}
+            >
+              Sign In
+            </button>
+            <button
+              className={`w-1/2 py-3 text-lg font-medium transition-all duration-200 ${
+                !isLogin ? "border-b-4 border-blue-600 text-blue-600" : "text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setIsLogin(false)}
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <div className="overflow-y-auto max-h-[500px] ">
             {showOtpForm ? (
               <OTPForm onVerify={handleOtpVerification} email={emailForOtp} />
             ) : (
-              <>
-                <div className="flex border-b mb-4">
-                  <button className={`w-1/2 py-2 text-lg font-semibold ${isLogin ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-500'}`} onClick={toggleForm}>Sign In</button>
-                  <button className={`w-1/2 py-2 text-lg font-semibold ${!isLogin ? 'border-b-4 border-blue-500 text-blue-500' : 'text-gray-500'}`} onClick={toggleForm}>Sign Up</button>
-                </div>
+              <div className="space-y-6">
                 {isLogin ? (
                   <SignIn onLoginSuccess={handleLoginSuccess} />
                 ) : (
                   <SignUp onSignupSuccess={handleSignupSuccess} />
                 )}
-              </>
+              </div>
             )}
           </div>
+
           {isLogin && !showOtpForm && (
-            <div className="mt-4 text-center">
-              <p className="text-gray-600">“Your dream home is just a click away!”</p>
+            <div className="mt-6 text-center">
+              <p className="text-gray-500 italic text-sm">
+                "Grow your real estate business with AgentPro's powerful platform!"
+              </p>
             </div>
           )}
         </div>

@@ -52,9 +52,9 @@ export default function PropertyStep({ details, updateDetails }) {
           <h3 className="text-lg font-semibold mb-3">
             What type of property are you looking to buy?
           </h3>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 ">
             {error ? (
-              <p className="text-red-500 text-sm">{error}</p>
+              <p className="text-red-500 text-sm font-bold">{error}</p>
             ) : propertyTypes.length > 0 ? (
               propertyTypes.map((type) => (
                 <button

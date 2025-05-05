@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { ArrowRight, Home, MapPin, ClipboardList } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Cookies from "js-cookie";
 import { updateDetails } from "../admin/reduxStore/user/detailsSlice";
 import PropertyStep from "../users/assets/component/Proposal/Property/Property";
 import LocationStep from "../users/assets/component/Proposal/Location/Location";
 import NeedsStepper from "../users/assets/component/Proposal/YourNeeds/Needs";
-
 import axiosInstance from "../utils/axiosInstance";
+import SubmissionModal from "./SubmissionModal";
 
 const FindAgentForm = () => {
   const details = useSelector((state) => state.details);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
 
   const steps = [
     { id: "01", label: "About Property", component: PropertyStep, icon: Home },
@@ -23,36 +23,65 @@ const FindAgentForm = () => {
     { id: "03", label: "Your Needs", component: NeedsStepper, icon: ClipboardList },
   ];
 
-  const [currentStep, setCurrentStep] = useState(0);
-
-  const validateCurrentStep = () => {
-    if (currentStep === 0) {
-      if (!details.propertyType || !details.weeklyOrSaleValue) {
-        toast.error("Please fill all fields in 'About Property' before proceeding!", { position: "top-center" });
-        return false;
-      }
-    } else if (currentStep === 1) {
-      if (!details.location ) {
-        toast.error("Please enter a location and pincode before proceeding!", { position: "top-center" });
-        return false;
-      }
-    } else if (currentStep === 2) {
-      if (!details.selectedPlan || !details.selectedPurpose) {
-        toast.error("Please fill all fields in 'Your Needs' before proceeding!", { position: "top-center" });
-        return false;
-      }
-      if (!details.isLegalReady || !details.isAssistance) {
-        toast.error("Please select options for mortgage and assistance before proceeding!", { position: "top-center" });
-        return false;
+  const validateStepsUpTo = (targetStep) => {
+    for (let step = 0; step <= targetStep; step++) {
+      if (step === 0) {
+        if (
+          !details.propertyType ||
+          !details.weeklyOrSaleValue ||
+          details.propertyType === "" ||
+          details.weeklyOrSaleValue === ""
+        ) {
+          toast.error("Please fill all fields in 'About Property' before proceeding!", {
+            position: "top-center",
+          });
+          return false;
+        }
+      } else if (step === 1) {
+        if (details.location === "") {
+          toast.error("Please enter a location before proceeding!", {
+            position: "top-center",
+          });
+          return false;
+        }
+      } else if (step === 2) {
+        if (
+          !details.selectedPlan ||
+          !details.selectedPurpose ||
+          details.selectedPlan === "" ||
+          details.selectedPurpose === ""
+        ) {
+          toast.error("Please fill all fields in 'Your Needs' before proceeding!", {
+            position: "top-center",
+          });
+          return false;
+        }
+        if (
+          !details.isLegalReady ||
+          !details.isAssistance ||
+          details.isLegalReady === "" ||
+          details.isAssistance === ""
+        ) {
+          toast.error("Please select options for mortgage and assistance before proceeding!", {
+            position: "top-center",
+          });
+          return false;
+        }
       }
     }
     return true;
   };
 
+  const validateCurrentStep = () => {
+    return validateStepsUpTo(currentStep);
+  };
+
   const handleNext = () => {
-    if (validateCurrentStep()) {
-      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
-    }
+    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+  };
+
+  const handleStepClick = (targetStep) => {
+    setCurrentStep(targetStep);
   };
 
   const handleBack = () => {
@@ -104,7 +133,15 @@ const FindAgentForm = () => {
       }
 
       console.log("Submitting Data:", formattedDetails);
-      navigate(`/showAgent`);
+      // Open modal instead of navigating
+      setIsModalOpen(true);
+
+      const token = Cookies.get();
+      if (token) {
+        console.log("have token");
+      } else {
+        console.log("dont have token");
+      }
     }
   };
 
@@ -112,20 +149,25 @@ const FindAgentForm = () => {
     dispatch(updateDetails(newData));
   };
 
+  // Close modal function
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <section className="flex justify-center items-start pt-10 pb-20  max-w-full text-center text-gray-900 font-sans ">
+    <section className="flex justify-center items-start pt-10 pb-20 max-w-full text-center text-gray-900 font-sans">
       <ToastContainer />
       <div className="w-full max-w-4xl flex flex-col items-center gap-12">
         <div className="w-full flex flex-col items-center gap-6">
-        <h1 className="text-2xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2  py-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in ">
-          Explore Our Network of Top Buyer's Agents
+          <h1 className="text-2xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-2 py-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in">
+            Explore Our Network of Top Buyer's Agents
           </h1>
           <p className="text-lg md:text-xl text-gray-600 font-medium text-center max-w-2xl">
             Get all the details you need to compare agents side by side, so you're confident before your first conversation.
           </p>
         </div>
 
-        <div className="w-full bg-white overflow-hidden p-6">
+        <div className="w-full bg-white overflow-hidden p-6 border border-gray-400 rounded-xl shadow-2xl">
           {/* Progress Bar */}
           <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
             <div
@@ -137,23 +179,27 @@ const FindAgentForm = () => {
           {/* Step Indicators */}
           <div className="w-full flex justify-between mb-8">
             {steps.map((step, index) => (
-              <div key={step.id} className="flex flex-col items-center">
+              <div
+                key={step.id}
+                className="flex flex-col items-center cursor-pointer"
+                onClick={() => handleStepClick(index)}
+              >
                 <div
                   className={`w-24 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-300 ${
                     currentStep === index
                       ? "bg-slate-700 text-white border-slate-800"
-                      : "bg-gray-200 border-gray-300 text-gray-500"
+                      : "bg-gray-200 border-gray-300 text-gray-500 hover:bg-gray-100"
                   }`}
                 >
                   <step.icon className="w-6 h-6" />
                 </div>
-                <span className="mt-2 text-sm font-medium text-gray-700">{step.label}</span>
+                <span className="mt-2 text-sm font-bold text-gray-700">{step.label}</span>
               </div>
             ))}
           </div>
 
           {/* Form Content */}
-          <div className="bg-white p-6  shadow-md border rounded-md">
+          <div className="bg-gray-50 p-6 border rounded-lg">
             {React.createElement(steps[currentStep].component, {
               details,
               updateDetails: handleUpdateDetails,
@@ -183,6 +229,13 @@ const FindAgentForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Submission Modal */}
+      <SubmissionModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        details={details}
+      />
     </section>
   );
 };

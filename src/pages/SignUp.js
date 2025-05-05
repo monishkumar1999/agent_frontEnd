@@ -44,15 +44,8 @@ function SignUp({ onSignupSuccess }) {
 
     if (!signupData.firstName) {
       newErrors.firstName = "First Name cannot be empty";
-    } else if (!/^[A-Z][a-z]*$/.test(signupData.firstName)) {
-      newErrors.firstName = "First Name must start with a capital letter and contain no integers.";
-    }
+    } 
 
-    if (!signupData.lastName) {
-      newErrors.lastName = "Last Name cannot be empty";
-    } else if (!/^[A-Z][a-z]*$/.test(signupData.lastName)) {
-      newErrors.lastName = "Last Name must start with a capital letter and contain no integers.";
-    }
 
     if (!signupData.email) {
       newErrors.email = "Email cannot be empty";
@@ -83,7 +76,7 @@ function SignUp({ onSignupSuccess }) {
   const registerUser = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.post("/agent/register", signupData);
+      const response = await axiosInstance.post("/agents/register", signupData);
       onSignupSuccess(signupData.email);
       console.log(response);
         // toast.success(response.data.message)
@@ -109,7 +102,7 @@ function SignUp({ onSignupSuccess }) {
       <h3 className="text-xl md:text-2xl font-semibold text-center">Create an Accounts</h3>
       
       <InputField label="First Name" type="text" name="firstName" value={signupData.firstName} onChange={handleChange} error={errors.firstName} />
-      <InputField label="Last Name" type="text" name="lastName" value={signupData.lastName} onChange={handleChange} error={errors.lastName} />
+     
       <InputField label="Email" type="text" name="email" value={signupData.email} onChange={handleChange} error={errors.email} />
       
       {/* Phone number field with 10-digit limit */}
