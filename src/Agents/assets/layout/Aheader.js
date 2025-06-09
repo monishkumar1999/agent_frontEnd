@@ -113,11 +113,9 @@ const handleImageChange = (newImage) => {
             </div>
             <div className="hidden sm:flex justify-center w-full">
               <div className="flex space-x-16"> {/* Adjust space-x as needed */}
-                <Link to="/agents/Home" className="hover:text-blue-500">Home</Link>
-                <Link to="/agents/About" className="hover:text-blue-500">About Us</Link>
-                <Link to="/agents/Contact" className="hover:text-blue-500">Contact</Link>
-                <Link to="/agents/Services" className="hover:text-blue-500">Services</Link>
-                <Link to="/agents/form" className="hover:text-blue-500">Form</Link>
+                <Link to="/agents/profile" className="hover:text-blue-500 font-bold">My Profile</Link>
+                <Link to="/agents/adminchat" className="hover:text-blue-500 font-bold">Admin chat</Link>
+                <Link to="/agents/request" className="hover:text-blue-500 font-bold">Client Requests</Link>
               </div>
             </div>
           </div>

@@ -55,9 +55,7 @@ function SignUp({ onSignupSuccess }) {
 
     if (!signupData.phone) {
       newErrors.phone = "Phone number cannot be empty";
-    } else if (!signupData.phone.match(/^[6789]\d{9}$/)) {
-      newErrors.phone = "Invalid phone number. Must be a 10-digit number starting with 6, 7, 8, or 9.";
-    }
+    } 
 
     if (!signupData.password) {
       newErrors.password = "Password cannot be empty";
@@ -78,12 +76,12 @@ function SignUp({ onSignupSuccess }) {
     try {
       const response = await axiosInstance.post("/agents/register", signupData);
       onSignupSuccess(signupData.email);
-      console.log(response);
+      console.log(response.data.message);
         // toast.success(response.data.message)
       // console.log("Signup successful:", response.data);
     } catch (e) {
-      console.log(e.response);
-        // toast.error(e.response.data.message)
+      console.log(e.response.data.message);
+       toast.error(e.response.data.message)
       // console.error("Error during signup:", error);
     } finally {
       setLoading(false);

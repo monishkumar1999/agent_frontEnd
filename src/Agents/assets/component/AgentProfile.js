@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import axiosInstance from '../../../utils/axiosInstance';
 import { IMGURL } from '../../../utils/imgpath';
 import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
 
 const cities = [
     "Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Gold Coast",
@@ -41,6 +43,8 @@ const clientTypesOptions = [
 ];
 
 const AgentProfile = () => {
+
+      
     const [agentData, setAgentData] = useState({});
     const [formData, setFormData] = useState({
         firstName: '',
@@ -80,6 +84,9 @@ const AgentProfile = () => {
         introVideo: null,
     });
 
+    const moveToPrivew=()=>{
+       
+    }
     useEffect(() => {
         const fetchAgent = async () => {
             try {
@@ -194,11 +201,11 @@ const AgentProfile = () => {
 
     const handleFileChange = (key, files) => {
         if (!files || files.length === 0) return;
-
+    
         const maxFileSize = 5 * 1024 * 1024;
         const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         const validVideoTypes = ['video/mp4', 'video/mov', 'video/webm'];
-
+    
         if (key === 'profileImage') {
             const file = files[0];
             if (!validImageTypes.includes(file.type)) {
@@ -233,10 +240,10 @@ const AgentProfile = () => {
                 return true;
             });
             const newUrls = newFiles.map((file) => URL.createObjectURL(file));
-            setPreviewUrls((prev) => {
-                prev.additionalImages.forEach((url) => URL.revokeObjectURL(url));
-                return { ...prev, additionalImages: [...prev.additionalImages, ...newUrls] };
-            });
+            setPreviewUrls((prev) => ({
+                ...prev,
+                additionalImages: [...prev.additionalImages, ...newUrls],
+            }));
             setFormData((prev) => ({
                 ...prev,
                 [key]: [...(prev[key] || []), ...newFiles],
@@ -278,18 +285,31 @@ const AgentProfile = () => {
                 return { ...prev, profileImage: null };
             });
         } else if (key === 'additionalImages' && index !== null) {
-            setFormData((prev) => {
-                const updatedImages = prev[key].filter((_, i) => i !== index);
-                const updatedUrls = previewUrls.additionalImages.filter((_, i) => i !== index);
-                previewUrls.additionalImages[index] && URL.revokeObjectURL(previewUrls.additionalImages[index]);
-                setPreviewUrls((prevUrls) => ({ ...prevUrls, additionalImages: updatedUrls }));
-                return { ...prev, [key]: updatedImages };
-            });
-        } else if (key === 'existingAdditionalImages' && index !== null) {
-            setFormData((prev) => ({
-                ...prev,
-                [key]: prev[key].filter((_, i) => i !== index),
-            }));
+            const existingImagesCount = formData.existingAdditionalImages.length;
+    
+            if (index < existingImagesCount) {
+                // Remove from existingAdditionalImages
+                setFormData((prev) => ({
+                    ...prev,
+                    existingAdditionalImages: prev.existingAdditionalImages.filter((_, i) => i !== index),
+                }));
+            } else {
+                // Remove from additionalImages
+                const newImageIndex = index - existingImagesCount;
+                setFormData((prev) => {
+                    const updatedImages = prev.additionalImages.filter((_, i) => i !== newImageIndex);
+                    const updatedUrls = [...prev.additionalImages];
+                    if (previewUrls.additionalImages[newImageIndex]) {
+                        URL.revokeObjectURL(previewUrls.additionalImages[newImageIndex]);
+                        updatedUrls.splice(newImageIndex, 1);
+                    }
+                    setPreviewUrls((prevUrls) => ({
+                        ...prevUrls,
+                        additionalImages: updatedUrls,
+                    }));
+                    return { ...prev, additionalImages: updatedImages };
+                });
+            }
         } else if (key === 'introVideo') {
             setFormData((prev) => ({
                 ...prev,
@@ -337,7 +357,7 @@ const AgentProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm() || hasSubmitted) return;
-
+    
         setHasSubmitted(true);
         setIsSubmitting(true);
         try {
@@ -360,43 +380,47 @@ const AgentProfile = () => {
             formDataToSend.append('clientsServed', formData.clientsServed);
             formDataToSend.append('avgBudget', formData.avgBudget);
             formDataToSend.append('bio', formData.bio);
-
-            // Handle profileImage: append the file if it exists, or 'null' if removed
+    
+            // Handle profileImage
             if (formData.profileImage instanceof File) {
                 formDataToSend.append('profileImage', formData.profileImage);
             } else if (!formData.profileImage && !formData.existingProfileImage) {
                 formDataToSend.append('profileImage', 'null');
             }
-
-            // Handle additionalImages: always append a value to indicate the desired action
+    
+            // Handle additionalImages
             if (formData.additionalImages && formData.additionalImages.length > 0) {
-                // New images are being uploaded
                 formData.additionalImages.forEach((image) => {
                     if (image instanceof File) {
                         formDataToSend.append('additionalImages', image);
                     }
                 });
-            } else if (!formData.additionalImages || (formData.additionalImages.length === 0 && formData.existingAdditionalImages.length === 0)) {
-                // No new images and existing images have been removed
-                formDataToSend.append('additionalImages', '[]');
-            } else {
-                // No new images are uploaded, and existing images should be preserved
-                formDataToSend.append('additionalImages', 'unchanged');
             }
-
-            // Handle introVideo: append the file if it exists, or 'null' if removed
+    
+            // Always send existingAdditionalImages to indicate which images to keep
+            formDataToSend.append(
+                'existingAdditionalImages',
+                JSON.stringify(formData.existingAdditionalImages)
+            );
+    
+            // Handle introVideo
             if (formData.introVideo instanceof File) {
                 formDataToSend.append('introVideo', formData.introVideo);
             } else if (!formData.introVideo && !formData.existingIntroVideo) {
                 formDataToSend.append('introVideo', 'null');
             }
-
+    
+            // Log formDataToSend for debugging
+            for (let pair of formDataToSend.entries()) {
+                console.log(`${pair[0]}: ${pair[1]}`);
+            }
+    
             const response = await axiosInstance.put('/agents/update-profile', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+    
             const updatedData = response.data.data;
             setAgentData(updatedData);
             setFormData((prev) => ({
@@ -689,46 +713,46 @@ const AgentProfile = () => {
                                 className="file-input"
                             />
                         )}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
-                            {formData.existingAdditionalImages &&
-                                formData.existingAdditionalImages.map((url, index) => (
-                                    <div key={`existing-${index}`} className="relative">
-                                        <img
-                                            src={`${IMGURL}${url}`}
-                                            alt={`Additional ${index}`}
-                                            className="w-full h-32 object-cover rounded-lg shadow-md"
-                                        />
-                                        {isEditing && (
-                                            <button
-                                                type="button"
-                                                onClick={() => handleRemoveFile('existingAdditionalImages', index)}
-                                                className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-all"
-                                            >
-                                                X
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
-                            {formData.additionalImages &&
-                                formData.additionalImages.map((image, index) => (
-                                    <div key={`new-${index}-${image.name}`} className="relative">
-                                        <img
-                                            src={previewUrls.additionalImages[index]}
-                                            alt={`Additional ${index}`}
-                                            className="w-full h-32 object-cover rounded-lg shadow-md"
-                                        />
-                                        {isEditing && (
-                                            <button
-                                                type="button"
-                                                onClick={() => handleRemoveFile('additionalImages', index)}
-                                                className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-all"
-                                            >
-                                                X
-                                            </button>
-                                        )}
-                                    </div>
-                                ))}
-                        </div>
+                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
+    {formData.existingAdditionalImages &&
+        formData.existingAdditionalImages.map((url, index) => (
+            <div key={`existing-${index}`} className="relative">
+                <img
+                    src={`${IMGURL}${url}`}
+                    alt={`Additional ${index}`}
+                    className="w-full h-32 object-cover rounded-lg shadow-md"
+                />
+                {isEditing && (
+                    <button
+                        type="button"
+                        onClick={() => handleRemoveFile('additionalImages', index)}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-all"
+                    >
+                        X
+                    </button>
+                )}
+            </div>
+        ))}
+    {formData.additionalImages &&
+        formData.additionalImages.map((image, index) => (
+            <div key={`new-${index}-${image.name}`} className="relative">
+                <img
+                    src={previewUrls.additionalImages[index]}
+                    alt={`Additional ${index}`}
+                    className="w-full h-32 object-cover rounded-lg shadow-md"
+                />
+                {isEditing && (
+                    <button
+                        type="button"
+                        onClick={() => handleRemoveFile('additionalImages', index + formData.existingAdditionalImages.length)}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 transition-all"
+                    >
+                        X
+                    </button>
+                )}
+            </div>
+        ))}
+</div>
                         {errors.additionalImages && (
                             <div className="text-red-500 text-sm mt-2">{errors.additionalImages}</div>
                         )}
@@ -774,6 +798,8 @@ const AgentProfile = () => {
 
                 <div className="text-right mt-6">
                     {!isEditing ? (
+                        <>
+                        
                         <button
                             type="button"
                             onClick={() => setIsEditing(true)}
@@ -781,6 +807,19 @@ const AgentProfile = () => {
                         >
                             Edit Profile
                         </button>
+
+
+                        <button
+                            type="button"
+                            onClick={() => moveToPrivew()}
+                            className="bg-pink-600 text-white font-semibold px-5 py-2 rounded-md hover:bg-pink-700 transition gap-3"
+                        >
+                            Priview
+                        </button>
+
+</>
+                        
+                        
                     ) : (
                         <div className="space-x-4">
                             <button
@@ -807,6 +846,7 @@ const AgentProfile = () => {
                         </div>
                     )}
                 </div>
+                
             </form>
 
             <style jsx global>{`

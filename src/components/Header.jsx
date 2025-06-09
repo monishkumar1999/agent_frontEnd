@@ -21,6 +21,7 @@ const HeaderComponent = () => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
+        console.log(decoded)
         setUserData({
           role: decoded.role,
           name: decoded.name || decoded.email || "User",

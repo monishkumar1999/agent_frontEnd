@@ -7,6 +7,7 @@ import Alayout from "../layout/Alayout"
 import MultiStepForm from "../component/Form/MultiStepForm";
 import EditProfilePhoto from "../component/EditProfilePhoto";
 import AdminChatbox from "../component/chating/adminchat/AdminChatbox";
+import Preview from "../component/Preview";
 
 const AgentHome = lazy(() => import("../component/AgentHome"));
 const AboutUs = lazy(() => import("../component/AboutUs"));
@@ -39,7 +40,7 @@ const AgentRoutes = () => {
           <Route path="/editprofile" element={<Alayout><EditProfilePhoto /></Alayout>} />
           <Route path="/adminchat" element={<Alayout><AdminChatbox /></Alayout>} />
           <Route path="/userchat/:targetId" element={<Alayout> <Userchat /></Alayout>}/>
-          
+          <Route path="/preview/:targetId" element={<Alayout> <Preview /></Alayout>}/>
         </Route>
       </Routes>
     </Suspense>
